@@ -8,13 +8,21 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      gridTemplateColumns: {
+        "13": "repeat(13, minmax(0, 1fr))",
+      },
+    },
+    keyframes: {
+      shimmer: {
+        "100%": {
+          transform: "translateX(100%)",
+        },
       },
     },
   },
-  plugins: [],
+  plugins: [require("daisyui")], //require("@tailwindcss/typography"),
+  daisyui: {
+    themes: ["cupcake", "light", "dark"],
+  },
 };
 export default config;
