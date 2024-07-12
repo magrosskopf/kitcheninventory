@@ -12,6 +12,9 @@ import { useState, useEffect } from "react";
 import { Item } from "@/app/lib/definitions/item.definitions";
 import { getItems } from "@/app/lib/api/item.service";
 import { log } from "console";
+import { createPlace, createSlot } from "@/app/lib/api/place.service";
+import { Slot } from "@/app/lib/definitions/slot.definitions";
+import mongoose from 'mongoose';
 
 export default function AddPlaceDialog(_items: Item[]) {
   const [slots, setSlots] = useState([{ id: 1, name: "", capacity: 1, item: "" }]);
@@ -47,16 +50,29 @@ export default function AddPlaceDialog(_items: Item[]) {
     const formData = new FormData(event.target as HTMLFormElement);
     const name = formData.get("name") as string;
     const image = formData.get("image") as File;
-    console.log(await image.arrayBuffer());
+    const imageBuffer = Buffer.from(await image.arrayBuffer())
     
-    const slotsData = slots.map(slot => ({
-      name: slot.name,
-      capacity: slot.capacity,
-      item: slot.item,
+    const slotsData: Slot[] = await Promise.all(slots.map(async (slot: Slot) => {
+      const tempSlot = {
+        name: slot.name,
+        capacity: slot.capacity,
+        item: (items.find(x => x._id == slot.item))?._id || "",
+      }
+      return await createSlot(tempSlot)
     }));
+
     
     // Hier können Sie die API-Aufrufe zum Speichern des Ortes und der Slots hinzufügen
-    console.log({ name, image, slots: slotsData });
+    console.log("test", { name, image, slots: Promise.all([...slotsData]) });
+    const result = await createPlace({
+      name,
+      slots: slotsData,
+      items: [],
+      image: imageBuffer,
+      userId: new mongoose.Types.ObjectId( "667da0d067b0fd272f7630dd"),
+    })
+    console.log(result);
+    
     // createPlace()
     document.getElementById("addPlaceDialog")?.close();
   };
@@ -169,3 +185,5 @@ export default function AddPlaceDialog(_items: Item[]) {
     </dialog>
   );
 }
+
+

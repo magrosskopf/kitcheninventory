@@ -1,7 +1,6 @@
 "use server";
 import ItemModel, { Item } from "../definitions/item.definitions";
 import connectToDatabase from "../database/mongoose";
-import mongoose from "mongoose";
 
 export type State = {
   errors?: {
@@ -14,7 +13,9 @@ export type State = {
 
 export async function createItem(prevState: State, formData: FormData) {
   try {
-    await connectToDatabase();
+    let test = await connectToDatabase();
+    console.log("test con", test);
+    
     const item = formDataToObject(formData);
     const newItem = new ItemModel({
       name: item.name,
@@ -33,7 +34,7 @@ export async function createItem(prevState: State, formData: FormData) {
 
 export async function updateItem(item: Item) {
   console.log(item);
-  
+ 
  let result = await ItemModel.updateOne({_id: item._id}, item)
   console.log(result)
 }
@@ -43,6 +44,7 @@ function formDataToObject(formData: FormData) {
 }
 
 export async function getItems(userId: string) {
+  await connectToDatabase();
   return await ItemModel.find({ user: userId }); //.populate('place category user');
 }
 

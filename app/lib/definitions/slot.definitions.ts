@@ -3,9 +3,9 @@ import mongoose, { Document, Schema, Model } from "mongoose";
 import { Item } from "./item.definitions";
 
 export type Slot = {
-  _id: string;
+  //_id: string;
   name: string;
-  item: Item;
+  item: string;
   capacity: number;
 };
 

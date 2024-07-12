@@ -14,6 +14,8 @@ if (!cached) {
 }
 
 async function connectToDatabase() {
+  console.log("MONGODB_URI", MONGODB_URI);
+  
   if (cached.conn) {
     return cached.conn;
   }

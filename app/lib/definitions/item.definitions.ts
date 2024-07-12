@@ -9,7 +9,7 @@ export type Item = {
   amount: number;
   place?: Place;
   category?: Category[];
-  userId: User;
+  user: User;
 };
 
 interface ItemDocument extends Item, Document {}

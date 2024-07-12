@@ -1,17 +1,16 @@
 "use client";
 import { useEffect, useState } from "react";
 import ItemComponent from "./item";
-import { Item, ListItem } from "@/app/lib/definitions/item.definitions";
-import { createItem, getItems } from "@/app/lib/api/item.service";
+import { Item } from "@/app/lib/definitions/item.definitions";
+import { getItems } from "@/app/lib/api/item.service";
 
-// eslint-disable-next-line @next/next/no-async-client-component
 export default function ItemList() {
   const [shiftedItemId, setShiftedItemId] = useState(-1);
   const [items, setItems] = useState<Item[]>([]);
 
   useEffect(() => {
-    getItems("667da0d067b0fd272f7630dd").then((_items: Item[]) =>
-      setItems(_items),
+    getItems("667da0d067b0fd272f7630dd").then((_items: Item[]) =>{
+      setItems(_items)}
     );
   }, []); // Leere Abhängigkeitsliste sorgt dafür, dass der Effekt nur einmal ausgeführt wird
 
