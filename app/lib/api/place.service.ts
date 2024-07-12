@@ -22,8 +22,12 @@ export async function createPlace(place: Place) {
     try {
       await connectToDatabase();
       const newSlot = new SlotModel(tempSlot)
-      const result: Slot = await newSlot.save()
-      return result["_id"].toString() || ""
+      const result = await newSlot.save()
+      if (result && result._id) {
+        return result._id.toString();
+      } else {
+        throw new Error('Slot creation failed');
+      }
     } catch (error) {
       console.log(error);
       
