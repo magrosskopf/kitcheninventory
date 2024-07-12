@@ -16,7 +16,7 @@ import { createPlace, createSlot } from "@/app/lib/api/place.service";
 import { Slot } from "@/app/lib/definitions/slot.definitions";
 import mongoose from 'mongoose';
 
-export default function AddPlaceDialog(_items: Item[]) {
+export default function AddPlaceDialog() {
   const [slots, setSlots] = useState([{ id: 1, name: "", capacity: 1, item: "" }]);
   const [items, setItems] = useState<Item[]>([]); // State to hold items for selection
 
