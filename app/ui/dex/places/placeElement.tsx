@@ -4,8 +4,8 @@ import Image from "next/image";
 
 export default function PlaceElement( {place}: {place: Place} ) {
   console.log("##", place.image);
-  const base64Image = place.image ? Buffer.from(place.image.data).toString("base64") : null;
-  const dataUrl = base64Image ? `data:image/png;base64,${base64Image}` : null;
+  const base64Image = Buffer.from(place.image.data).toString("base64")
+  const dataUrl = `data:image/png;base64,${base64Image}`
   return (
     <a href={`/places/${place._id}`} className="block">
       <div className="card glass h-32  text-center">

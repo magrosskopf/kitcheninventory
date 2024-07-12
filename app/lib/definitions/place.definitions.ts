@@ -3,11 +3,12 @@ import mongoose, { Document, Schema, Model } from "mongoose";
 import { Slot } from "./slot.definitions";
 
 export type Place = {
+  [x: string]: any;
   name: string;
   slots?: Slot[];
   items?: string[];
   image?: Buffer;
-  userId: string;
+  userId: Schema.Types.ObjectId;
 };
 
 interface PlaceDocument extends Place, Document {}
