@@ -18,7 +18,7 @@ export async function createPlace(place: Place) {
     }
   }
 
-  export async function createSlot(tempSlot: { name: string; capacity: number; item: string; }): any {
+  export async function createSlot(tempSlot: { name: string; capacity: number; item: string; }) {
     try {
       await connectToDatabase();
       const newSlot = new SlotModel(tempSlot)
