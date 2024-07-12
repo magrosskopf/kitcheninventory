@@ -52,7 +52,7 @@ export default function AddPlaceDialog() {
     const image = formData.get("image") as File;
     const imageBuffer = Buffer.from(await image.arrayBuffer())
     
-    const slotsData: Slot[] = await Promise.all(slots.map(async (slot: Slot) => {
+    const slotsData: any[] = await Promise.all(slots.map(async (slot: Slot) => {
       const tempSlot = {
         name: slot.name,
         capacity: slot.capacity,
@@ -63,7 +63,6 @@ export default function AddPlaceDialog() {
 
     
     // Hier können Sie die API-Aufrufe zum Speichern des Ortes und der Slots hinzufügen
-    console.log("test", { name, image, slots: Promise.all([...slotsData]) });
     const result = await createPlace({
       name,
       slots: slotsData,
