@@ -8,7 +8,7 @@ export type Place = {
   slots?: Slot[];
   items?: string[];
   image?: Buffer;
-  userId: Schema.Types.ObjectId;
+  userId: string;
 };
 
 interface PlaceDocument extends Place, Document {}

@@ -70,10 +70,8 @@ export default function AddPlaceDialog() {
       image: imageBuffer,
       userId: new mongoose.Types.ObjectId( "667da0d067b0fd272f7630dd"),
     })
-    console.log(result);
     
-    // createPlace()
-    document.getElementById("addPlaceDialog")?.close();
+    
   };
 
   return (
@@ -167,7 +165,10 @@ export default function AddPlaceDialog() {
             <button
               type="button"
               className="btn btn-secondary"
-              onClick={() => document.getElementById("addPlaceDialog")?.close()}
+              onClick={() => {
+                const dialog = document.getElementById("addPlaceDialog") as HTMLDialogElement;
+                dialog?.close();
+              }}
             >
               Beenden <XMarkIcon className="w-4" />
             </button>

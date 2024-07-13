@@ -3,8 +3,9 @@ import { CubeIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 
 export default function PlaceElement( {place}: {place: Place} ) {
-  console.log("##", place.image);
-  const base64Image = Buffer.from(place.image.data).toString("base64")
+  const image = place.image 
+  // @ts-ignore
+  const base64Image = place?.image ? Buffer.from(image["data"]).toString("base64") : ""
   const dataUrl = `data:image/png;base64,${base64Image}`
   return (
     <a href={`/places/${place._id}`} className="block">

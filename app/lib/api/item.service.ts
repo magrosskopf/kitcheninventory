@@ -11,7 +11,7 @@ export type State = {
   message?: string | null;
 };
 
-export async function createItem(prevState: State, formData: FormData) {
+export async function createItem(formData: FormData): Promise<Boolean> {
   try {
     let test = await connectToDatabase();
     console.log("test con", test);

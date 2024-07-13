@@ -15,14 +15,17 @@ import { Category } from "@/app/lib/definitions/category.definitions";
 import mongoose from "mongoose";
 
 export default function AddItemDialog() {
-  const initialState = { message: null, errors: {} };
-  const [state, dispatch] = useFormState(createItem, initialState);
-
+  
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    createItem(formData);
+  };
   const places: Place[] = [
     {
       id: new mongoose.Types.ObjectId().toHexString(),
       name: "Kühlschrank",
-      userId: "667da0d067b0fd272f7630dd",
+      userId:"667da0d067b0fd272f7630dd",
     },
     {
       id: new mongoose.Types.ObjectId().toHexString(),
@@ -54,7 +57,7 @@ export default function AddItemDialog() {
         </div>
         <Divider />
 
-        <form action={dispatch}>
+        <form onSubmit={handleSubmit}>
           <label className="form-control w-full max-w-xs">
             <div className="label">
               <span className="label-text">Name</span>
@@ -125,7 +128,10 @@ export default function AddItemDialog() {
           <div className="flex w-full flex-row  justify-between">
             <button
               className="btn  btn-secondary"
-              onClick={() => document.getElementById("addItemDialog")?.close()}
+              onClick={() => {
+                const dialog = document.getElementById("addItemDialog") as HTMLDialogElement;
+                dialog?.close();
+              }}
             >
               Beenden <XMarkIcon className="w-4" />
             </button>
@@ -133,7 +139,10 @@ export default function AddItemDialog() {
             <button
               className="btn  btn-primary"
               type="submit"
-              onClick={() => document.getElementById("addItemDialog")?.close()}
+              onClick={() => {
+                const dialog = document.getElementById("addItemDialog") as HTMLDialogElement;
+                dialog?.close();
+              }}
             >
               Hinzufügen <PlusIcon className="w-4" />
             </button>
