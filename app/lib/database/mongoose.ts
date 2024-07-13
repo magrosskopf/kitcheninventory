@@ -1,7 +1,7 @@
 // lib/mongoose.js
 import mongoose from "mongoose";
 
-const MONGODB_URI = process.env.MONGODB_URI;
+const MONGODB_URI = process.env.MONGODB_URI || "";
 
 if (!MONGODB_URI) {
   throw new Error("Please add your Mongo URI to .env.local");
@@ -10,7 +10,7 @@ if (!MONGODB_URI) {
 let cached = global.mongoose;
 
 if (!cached) {
-  cached = global.mongoose = { conn: null, promise: null };
+  cached = global.mongoose 
 }
 
 async function connectToDatabase() {
@@ -25,9 +25,7 @@ async function connectToDatabase() {
       bufferCommands: false,
     };
 
-    cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
-      return mongoose;
-    });
+    cached.promise = await mongoose.connect(MONGODB_URI, opts)
   }
 
   cached.conn = await cached.promise;
