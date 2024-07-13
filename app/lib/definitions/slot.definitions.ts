@@ -1,6 +1,5 @@
 // models/SlotModel.ts
-import mongoose, { Document, Schema, Model } from "mongoose";
-import { Item } from "./item.definitions";
+import { Schema, Model } from "mongoose";
 
 export type Slot = {
   _id?: string;
