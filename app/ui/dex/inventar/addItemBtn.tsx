@@ -6,7 +6,10 @@ export default function AddItemBtn() {
     <div className="flex flex-row sticky bottom-20 justify-end">
       <button
         className="btn btn-circle btn-accent"
-        onClick={() => document.getElementById("addItemDialog")?.showModal()}
+        onClick={() => {
+          const dialog = document.getElementById("addItemDialog") as HTMLDialogElement;
+          dialog?.showModal();
+        }}
       >
         <PlusCircleIcon className="w-7" />
       </button>
