@@ -17,6 +17,7 @@ export default function PlaceElement( {place}: {place: Place} ) {
           width={800}
           height={500}
         />
+        
         </figure> 
         <div className="card-body p-1">
           <p className="">{place.name}</p>
