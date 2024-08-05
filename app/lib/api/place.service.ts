@@ -1,6 +1,6 @@
 "use server";
 import connectToDatabase from "@/app/lib/database/mongoose";
-import PlaceModel, { Place } from "@/app/lib/definitions/place.definitions";
+import PlaceModel, { Place, PopulatedPlace } from "@/app/lib/definitions/place.definitions";
 import SlotModel, { Slot } from "../definitions/slot.definitions";
 
 export async function createPlace(place: any) {
@@ -36,6 +36,21 @@ export async function createPlace(place: any) {
   }
 
 export async function getPlaces(userId: string) {
-    const places = await PlaceModel.find().populate('slots');
+  console.log("#####");
+  await connectToDatabase();
+    const places = await PlaceModel.find({userId}).populate("items")
+    console.log("###",places);
+    
     return JSON.stringify(places)
+}
+
+export async function getPlace(id: string): Promise<PopulatedPlace<'slots' | 'items'>> {
+  await connectToDatabase()
+  const place = await PlaceModel.findOne({_id: id })
+    .populate("slots")
+    .populate("items")
+  console.log("-asdfa", place);
+  
+  const stringPlace = JSON.stringify(place)
+  return JSON.parse(stringPlace)
 }

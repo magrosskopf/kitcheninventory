@@ -9,7 +9,7 @@ export default function PlacesGrid() {
 
   useEffect(() => {
     getPlaces("667da0d067b0fd272f7630dd").then((_places: string) =>{
-      console.log("PLACSE", _places);
+   
       
       setPlaces(JSON.parse(_places))}
     );

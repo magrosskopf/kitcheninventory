@@ -13,31 +13,26 @@ import { useFormState, useFormStatus } from "react-dom";
 import { Place } from "@/app/lib/definitions/place.definitions";
 import { Category } from "@/app/lib/definitions/category.definitions";
 import mongoose from "mongoose";
+import { getPlaces } from "@/app/lib/api/place.service";
+import { Item } from "@/app/lib/definitions/item.definitions";
+import { useState, useEffect } from "react";
+import { log } from "console";
 
 export default function AddItemDialog() {
-  
+  const [places, setPlaces] = useState<Place[]>();
+  useEffect(() => {
+      getPlaces("667da0d067b0fd272f7630dd").then((places) => {
+        let _places = JSON.parse(places) as Place[]
+        setPlaces(_places);
+       
+      });
+  }, []);
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     createItem(formData);
   };
-  const places: Place[] = [
-    {
-      id: new mongoose.Types.ObjectId().toHexString(),
-      name: "Kühlschrank",
-      userId:"667da0d067b0fd272f7630dd",
-    },
-    {
-      id: new mongoose.Types.ObjectId().toHexString(),
-      name: "Schrank oben rechts",
-      userId: "667da0d067b0fd272f7630dd",
-    },
-    {
-      id: new mongoose.Types.ObjectId().toHexString(),
-      name: "Obstschale",
-      userId: "667da0d067b0fd272f7630dd",
-    },
-  ];
+
   const categories: Category[] = [
     {
       id: new mongoose.Types.ObjectId().toHexString(),
@@ -92,9 +87,9 @@ export default function AddItemDialog() {
               defaultValue=""
             >
               <option disabled>Pick one</option>
-              {places.map((place: Place) => {
+              {places?.map((place: Place) => {
                 return (
-                  <option key={place.id} value={place.id}>
+                  <option key={place._id} value={place._id}>
                     {place.name}
                   </option>
                 );

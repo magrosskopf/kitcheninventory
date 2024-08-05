@@ -1,6 +1,8 @@
 // models/PlaceModel.ts
 import mongoose, { Document, Schema, Model } from "mongoose";
 import { Slot } from "./slot.definitions";
+import { Item } from "./item.definitions";
+import { User } from "./user.definitioins";
 
 export type Place = {
   [x: string]: any;
@@ -10,6 +12,12 @@ export type Place = {
   image?: Buffer;
   userId: string;
 };
+
+export type PopulatedPlace<T extends keyof Place> = Omit<Place, T> & {
+  [K in T]: K extends 'items' ? Item[] : K extends 'userId' ? User : K extends 'slots' ? Slot[] : Place[K];
+};
+
+// kann so verwendet werden:  useState<PopulatedPlace<'slots' | 'items' | 'userId'> | null>(null);
 
 interface PlaceDocument extends Place, Document {}
 

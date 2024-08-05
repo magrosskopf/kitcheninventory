@@ -1,5 +1,5 @@
 // models/SlotModel.ts
-import { Schema, Model } from "mongoose";
+import mongoose, { Schema, Model } from "mongoose";
 
 export type Slot = {
   _id?: string;
@@ -17,6 +17,6 @@ const SlotSchema: Schema = new Schema({
 });
 
 const SlotModel: Model<SlotDocument> =
-  mongoose.models.Slot || mongoose.model<SlotDocument>("Slot", SlotSchema);
+  mongoose.models?.Slot || mongoose.model<SlotDocument>("Slot", SlotSchema);
 
 export default SlotModel;

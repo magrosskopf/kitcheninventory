@@ -25,7 +25,7 @@ export default function AddPlaceDialog() {
     getItems("667da0d067b0fd272f7630dd").then((_items: Item[]) =>
       {
         setItems(_items)
-        console.log("_items");
+        console.log("_items", _items);
         
       }
     );

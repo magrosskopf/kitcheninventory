@@ -1,6 +1,7 @@
 "use server";
 import ItemModel, { Item } from "../definitions/item.definitions";
 import connectToDatabase from "../database/mongoose";
+import PlaceModel from "../definitions/place.definitions";
 
 export type State = {
   errors?: {
@@ -13,9 +14,7 @@ export type State = {
 
 export async function createItem(formData: FormData): Promise<Boolean> {
   try {
-    let test = await connectToDatabase();
-    console.log("test con", test);
-    
+    await connectToDatabase();
     const item = formDataToObject(formData);
     const newItem = new ItemModel({
       name: item.name,
@@ -24,7 +23,11 @@ export async function createItem(formData: FormData): Promise<Boolean> {
       place: item.place,
       user: "667da0d067b0fd272f7630dd",
     });
-    await newItem.save();
+    const savedItem = await newItem.save();
+    await PlaceModel.findByIdAndUpdate(
+      item.place,
+      { $push: { items: savedItem } }  // Angenommen, Place hat ein items-Feld, das eine Liste von Item-IDs ist
+    );
     return true;
   } catch (error) {
     console.log(error);
