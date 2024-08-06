@@ -8,6 +8,7 @@ import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import dataUrl from "@/app/lib/util/dataUrl"
+import SlotsComponent from "@/app/ui/dex/places/slotComponent";
 
 export default function Page() {
   const { id } = useParams<{ id: string }>();
@@ -40,8 +41,7 @@ export default function Page() {
       <div className="columns-2">
         <div className="avatar w-full">
           <div className="ring-primary ring-offset-base-100 w-24 rounded-full ring ring-offset-2">
-
-          {image && <Image
+          {image != ""  && <Image
             src={image || ""}
             width={500}
             height={500}
@@ -56,7 +56,7 @@ export default function Page() {
          <small>Items: {place?.items?.length}</small>
         </div>
       </div>
-      <Divider />
+      <Divider/>
       <div className="mt-5">
         <ul>
           {place?.items?.map((item, i) => {
@@ -74,8 +74,10 @@ export default function Page() {
         </ul>
       </div>
       <Divider />
-      <div className="grid column-4">
-          
+      <div className="mt-5"> 
+        {place &&
+          <SlotsComponent _slots={place.slots}/>  
+        }
       </div>
       
       

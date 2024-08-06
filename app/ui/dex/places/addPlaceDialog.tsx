@@ -52,7 +52,7 @@ export default function AddPlaceDialog() {
     const image = formData.get("image") as File;
     const imageBuffer = Buffer.from(await image.arrayBuffer())
     
-    const slotsData: any[] = await Promise.all(slots.map(async (slot: Slot) => {
+    const slotsData: any[] = await Promise.all(slots.map(async (slot: {name: string, capacity: number, item: string}) => {
       const tempSlot = {
         name: slot.name,
         capacity: slot.capacity,

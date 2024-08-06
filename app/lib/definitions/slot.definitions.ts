@@ -2,7 +2,7 @@
 import mongoose, { Schema, Model } from "mongoose";
 
 export type Slot = {
-  _id?: string;
+  _id: string;
   name: string;
   item: string;
   capacity: number;

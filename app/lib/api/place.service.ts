@@ -54,3 +54,12 @@ export async function getPlace(id: string): Promise<PopulatedPlace<'slots' | 'it
   const stringPlace = JSON.stringify(place)
   return JSON.parse(stringPlace)
 }
+
+export async function deleteSlot(id: string) {
+  return await SlotModel.deleteOne({_id: id})
+}
+
+export async function updateSlot(slot: Slot | undefined) {
+  if(!slot) return
+  return await SlotModel.updateOne({_id: slot._id}, slot)
+}
