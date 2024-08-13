@@ -14,7 +14,13 @@ export type Place = {
 };
 
 export type PopulatedPlace<T extends keyof Place> = Omit<Place, T> & {
-  [K in T]: K extends 'items' ? Item[] : K extends 'userId' ? User : K extends 'slots' ? Slot[] : Place[K];
+  [K in T]: K extends "items"
+    ? Item[]
+    : K extends "userId"
+      ? User
+      : K extends "slots"
+        ? Slot[]
+        : Place[K];
 };
 
 // kann so verwendet werden:  useState<PopulatedPlace<'slots' | 'items' | 'userId'> | null>(null);
@@ -26,7 +32,7 @@ const PlaceSchema: Schema = new Schema({
   slots: [{ type: Schema.Types.ObjectId, ref: "Slot" }],
   items: [{ type: Schema.Types.ObjectId, ref: "Item" }],
   userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
-  image: { type: Buffer }
+  image: { type: Buffer },
 });
 
 const PlaceModel: Model<PlaceDocument> =

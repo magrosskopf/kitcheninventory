@@ -9,9 +9,9 @@ export default function ItemList() {
   const [items, setItems] = useState<Item[]>([]);
 
   useEffect(() => {
-    getItems("667da0d067b0fd272f7630dd").then((_items: Item[]) =>{
-      setItems(_items)}
-    );
+    getItems("667da0d067b0fd272f7630dd").then((_items: Item[]) => {
+      setItems(_items);
+    });
   }, []); // Leere Abhängigkeitsliste sorgt dafür, dass der Effekt nur einmal ausgeführt wird
 
   const handleDeleteItem = (deletedItemId: string) => {

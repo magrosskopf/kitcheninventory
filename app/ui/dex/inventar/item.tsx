@@ -79,15 +79,14 @@ export default function ItemComponent({
   };
   const decreaseItemAmount = (): void => {
     setItemData({ ...itemData, amount: itemData.amount - 1 });
-    itemData.amount -= 1
-    updateItem(itemData)
+    itemData.amount -= 1;
+    updateItem(itemData);
   };
 
   const increaseItemAmount = (): void => {
     setItemData({ ...itemData, amount: itemData.amount + 1 });
-    itemData.amount += 1
-    updateItem(itemData)
-
+    itemData.amount += 1;
+    updateItem(itemData);
   };
 
   return (

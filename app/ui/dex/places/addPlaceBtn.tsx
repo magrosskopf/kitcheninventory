@@ -7,7 +7,9 @@ export default function AddPlaceBtn() {
       <button
         className="btn btn-circle btn-accent"
         onClick={() => {
-          const dialog = document.getElementById("addPlaceDialog") as HTMLDialogElement;
+          const dialog = document.getElementById(
+            "addPlaceDialog",
+          ) as HTMLDialogElement;
           dialog?.showModal();
         }}
       >

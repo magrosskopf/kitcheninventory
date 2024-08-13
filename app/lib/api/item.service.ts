@@ -26,7 +26,7 @@ export async function createItem(formData: FormData): Promise<Boolean> {
     const savedItem = await newItem.save();
     await PlaceModel.findByIdAndUpdate(
       item.place,
-      { $push: { items: savedItem } }  // Angenommen, Place hat ein items-Feld, das eine Liste von Item-IDs ist
+      { $push: { items: savedItem } }, // Angenommen, Place hat ein items-Feld, das eine Liste von Item-IDs ist
     );
     return true;
   } catch (error) {
@@ -37,9 +37,9 @@ export async function createItem(formData: FormData): Promise<Boolean> {
 
 export async function updateItem(item: Item) {
   console.log(item);
- 
- let result = await ItemModel.updateOne({_id: item._id}, item)
-  console.log(result)
+
+  let result = await ItemModel.updateOne({ _id: item._id }, item);
+  console.log(result);
 }
 
 function formDataToObject(formData: FormData) {

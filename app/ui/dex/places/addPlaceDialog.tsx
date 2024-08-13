@@ -14,34 +14,38 @@ import { getItems } from "@/app/lib/api/item.service";
 import { log } from "console";
 import { createPlace, createSlot } from "@/app/lib/api/place.service";
 import { Slot } from "@/app/lib/definitions/slot.definitions";
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 export default function AddPlaceDialog() {
-  const [slots, setSlots] = useState([{ id: 1, name: "", capacity: 1, item: "" }]);
+  const [slots, setSlots] = useState([
+    { id: 1, name: "", capacity: 1, item: "" },
+  ]);
   const [items, setItems] = useState<Item[]>([]); // State to hold items for selection
 
   useEffect(() => {
     // Fetch items from the server to populate the item selection dropdown
-    getItems("667da0d067b0fd272f7630dd").then((_items: Item[]) =>
-      {
-        setItems(_items)
-        console.log("_items", _items);
-        
-      }
-    );
+    getItems("667da0d067b0fd272f7630dd").then((_items: Item[]) => {
+      setItems(_items);
+      console.log("_items", _items);
+    });
   }, []);
 
   const addSlot = () => {
-    setSlots([...slots, { id: slots.length + 1, name: "", capacity: 1, item: "" }]);
+    setSlots([
+      ...slots,
+      { id: slots.length + 1, name: "", capacity: 1, item: "" },
+    ]);
   };
 
   const removeSlot = (id: number) => {
-    setSlots(slots.filter(slot => slot.id !== id));
+    setSlots(slots.filter((slot) => slot.id !== id));
   };
 
   const handleSlotChange = (id: number, field: string, value: any) => {
     setSlots(
-      slots.map(slot => (slot.id === id ? { ...slot, [field]: value } : slot))
+      slots.map((slot) =>
+        slot.id === id ? { ...slot, [field]: value } : slot,
+      ),
     );
   };
 
@@ -50,28 +54,29 @@ export default function AddPlaceDialog() {
     const formData = new FormData(event.target as HTMLFormElement);
     const name = formData.get("name") as string;
     const image = formData.get("image") as File;
-    const imageBuffer = Buffer.from(await image.arrayBuffer())
-    
-    const slotsData: any[] = await Promise.all(slots.map(async (slot: {name: string, capacity: number, item: string}) => {
-      const tempSlot = {
-        name: slot.name,
-        capacity: slot.capacity,
-        item: (items.find(x => x._id == slot.item))?._id || "",
-      }
-      return await createSlot(tempSlot)
-    }));
+    const imageBuffer = Buffer.from(await image.arrayBuffer());
 
-    
+    const slotsData: any[] = await Promise.all(
+      slots.map(
+        async (slot: { name: string; capacity: number; item: string }) => {
+          const tempSlot = {
+            name: slot.name,
+            capacity: slot.capacity,
+            item: items.find((x) => x._id == slot.item)?._id || "",
+          };
+          return await createSlot(tempSlot);
+        },
+      ),
+    );
+
     // Hier können Sie die API-Aufrufe zum Speichern des Ortes und der Slots hinzufügen
     const result = await createPlace({
       name,
       slots: slotsData,
       items: [],
       image: imageBuffer,
-      userId: new mongoose.Types.ObjectId( "667da0d067b0fd272f7630dd"),
-    })
-    
-    
+      userId: new mongoose.Types.ObjectId("667da0d067b0fd272f7630dd"),
+    });
   };
 
   return (
@@ -101,7 +106,12 @@ export default function AddPlaceDialog() {
             <div className="label">
               <span className="label-text">Bild</span>
             </div>
-            <input type="file" name="image" accept="image/*" className="file-input w-full" />
+            <input
+              type="file"
+              name="image"
+              accept="image/*"
+              className="file-input w-full"
+            />
           </label>
 
           <Divider />
@@ -116,7 +126,9 @@ export default function AddPlaceDialog() {
                   <input
                     type="text"
                     value={slot.name}
-                    onChange={(e) => handleSlotChange(slot.id, "name", e.target.value)}
+                    onChange={(e) =>
+                      handleSlotChange(slot.id, "name", e.target.value)
+                    }
                     placeholder={`Slot Name ${index + 1}`}
                     className="input input-bordered w-full mr-2"
                     required
@@ -124,20 +136,32 @@ export default function AddPlaceDialog() {
                   <input
                     type="number"
                     value={slot.capacity}
-                    onChange={(e) => handleSlotChange(slot.id, "capacity", Number(e.target.value))}
+                    onChange={(e) =>
+                      handleSlotChange(
+                        slot.id,
+                        "capacity",
+                        Number(e.target.value),
+                      )
+                    }
                     placeholder="Capacity"
                     className="input input-bordered w-full mr-2"
                     required
                   />
                   <select
                     value={slot.item}
-                    onChange={(e) => handleSlotChange(slot.id, "item", e.target.value)}
+                    onChange={(e) =>
+                      handleSlotChange(slot.id, "item", e.target.value)
+                    }
                     className="select select-bordered w-full mr-2"
                     required
                   >
-                    <option value="" disabled>Select Item</option>
+                    <option value="" disabled>
+                      Select Item
+                    </option>
                     {items.map((item: any) => (
-                      <option key={item._id} value={item._id}>{item.name}</option>
+                      <option key={item._id} value={item._id}>
+                        {item.name}
+                      </option>
                     ))}
                   </select>
                   <button
@@ -166,17 +190,16 @@ export default function AddPlaceDialog() {
               type="button"
               className="btn btn-secondary"
               onClick={() => {
-                const dialog = document.getElementById("addPlaceDialog") as HTMLDialogElement;
+                const dialog = document.getElementById(
+                  "addPlaceDialog",
+                ) as HTMLDialogElement;
                 dialog?.close();
               }}
             >
               Beenden <XMarkIcon className="w-4" />
             </button>
 
-            <button
-              className="btn btn-primary"
-              type="submit"
-            >
+            <button className="btn btn-primary" type="submit">
               Hinzufügen <PlusIcon className="w-4" />
             </button>
           </div>
@@ -185,5 +208,3 @@ export default function AddPlaceDialog() {
     </dialog>
   );
 }
-
-

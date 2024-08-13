@@ -32,7 +32,7 @@ declare global {
         UserDocument & { _id: mongoose.Types.ObjectId },
       any
     >;
-    conn: mongoose.Connection | typeof import('mongoose');
-    promise: Promise<mongoose.Connection> | typeof import('mongoose');
+    conn: mongoose.Connection | typeof import("mongoose");
+    promise: Promise<mongoose.Connection> | typeof import("mongoose");
   };
 }

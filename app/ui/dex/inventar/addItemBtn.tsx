@@ -7,7 +7,9 @@ export default function AddItemBtn() {
       <button
         className="btn btn-circle btn-accent"
         onClick={() => {
-          const dialog = document.getElementById("addItemDialog") as HTMLDialogElement;
+          const dialog = document.getElementById(
+            "addItemDialog",
+          ) as HTMLDialogElement;
           dialog?.showModal();
         }}
       >

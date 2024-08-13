@@ -8,16 +8,16 @@ export default function PlacesGrid() {
   const [places, setPlaces] = useState<Place[]>([]);
 
   useEffect(() => {
-    getPlaces("667da0d067b0fd272f7630dd").then((_places: string) =>{
-   
-      
-      setPlaces(JSON.parse(_places))}
-    );
+    getPlaces("667da0d067b0fd272f7630dd").then((_places: string) => {
+      setPlaces(JSON.parse(_places));
+    });
   }, []); // Leere Abhängigkeitsliste sorgt dafür, dass der Effekt nur einmal ausgeführt wird
 
   return (
     <div className="h-full grid grid-cols-3 gap-4">
-      {places.length == 0 && <p className="small">Keine Lagerorte definiert.</p>}
+      {places.length == 0 && (
+        <p className="small">Keine Lagerorte definiert.</p>
+      )}
       {places.map((place, i) => {
         return <PlaceElement key={i} place={place} />;
       })}

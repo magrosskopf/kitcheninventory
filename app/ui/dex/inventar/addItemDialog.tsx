@@ -21,11 +21,10 @@ import { log } from "console";
 export default function AddItemDialog() {
   const [places, setPlaces] = useState<Place[]>();
   useEffect(() => {
-      getPlaces("667da0d067b0fd272f7630dd").then((places) => {
-        let _places = JSON.parse(places) as Place[]
-        setPlaces(_places);
-       
-      });
+    getPlaces("667da0d067b0fd272f7630dd").then((places) => {
+      let _places = JSON.parse(places) as Place[];
+      setPlaces(_places);
+    });
   }, []);
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -124,7 +123,9 @@ export default function AddItemDialog() {
             <button
               className="btn  btn-secondary"
               onClick={() => {
-                const dialog = document.getElementById("addItemDialog") as HTMLDialogElement;
+                const dialog = document.getElementById(
+                  "addItemDialog",
+                ) as HTMLDialogElement;
                 dialog?.close();
               }}
             >
@@ -135,7 +136,9 @@ export default function AddItemDialog() {
               className="btn  btn-primary"
               type="submit"
               onClick={() => {
-                const dialog = document.getElementById("addItemDialog") as HTMLDialogElement;
+                const dialog = document.getElementById(
+                  "addItemDialog",
+                ) as HTMLDialogElement;
                 dialog?.close();
               }}
             >
