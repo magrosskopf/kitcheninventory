@@ -9,7 +9,6 @@ import {
   PencilIcon,
   TrashIcon,
 } from "@heroicons/react/24/outline";
-import { log } from "console";
 import { useRef, useState } from "react";
 
 export default function ItemComponent({
@@ -27,7 +26,6 @@ export default function ItemComponent({
 }) {
   const [loading, setLoading] = useState(false);
   const [itemData, setItemData] = useState(data);
-
   const handleDelete = async (event: any) => {
     event.preventDefault();
     if (!isShifted) return;
@@ -98,14 +96,14 @@ export default function ItemComponent({
         onTouchMove={handleTouchMove}
       >
         <div className="label-container flex flex-col">
-          <h2 className="text-accent text-xl">{itemData.name}</h2>
+          <h2 className="text-accent text-xl hyphens-auto">{itemData.name}</h2>
           <div className="text-sm flex flex-row text-content">
             <TagIcon className="w-4 mr-2" />
             <span className="text-sm">Gemüse</span>
           </div>
           <div className="text-sm flex flex-row text-content">
             <MapPinIcon className="w-4 mr-2" />
-            Kühlschrank
+            {itemData.place?.name}
           </div>
         </div>
         <div className="quantity-buttons flex flex-row px-2">
@@ -127,9 +125,12 @@ export default function ItemComponent({
         className={`absolute right-2 bottom-2 flex flex-col transition-opacity duration-300 ease-in-out ${isShifted ? "opacity-100 z-10" : "opacity-0 z-0"}`}
         style={{ pointerEvents: isShifted ? "auto" : "none" }}
       >
-        <button className="btn btn-edit btn-circle mb-1">
+        <a
+          href={`/inventar/${itemData._id}`}
+          className="btn btn-edit btn-circle mb-1"
+        >
           <PencilIcon className="w-4" />
-        </button>
+        </a>
         <button
           className={`btn btn-delete btn-circle mt-1 ${loading ? "loading loading-bars loading-lg  text-secondary" : ""}`}
           onClick={handleDelete}

@@ -73,6 +73,9 @@ export async function updateSlot(slot: Slot | undefined) {
 
 export async function addSlotToPlace(slotId: string, placeId: string) {
   console.log("---", placeId, slotId);
-  
-  return await PlaceModel.updateOne({_id: placeId}, { $push: { slots: slotId } })
+
+  return await PlaceModel.updateOne(
+    { _id: placeId },
+    { $push: { slots: slotId } },
+  );
 }

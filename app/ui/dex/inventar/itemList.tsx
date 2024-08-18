@@ -9,8 +9,10 @@ export default function ItemList() {
   const [items, setItems] = useState<Item[]>([]);
 
   useEffect(() => {
-    getItems("667da0d067b0fd272f7630dd").then((_items: Item[]) => {
-      setItems(_items);
+    getItems("667da0d067b0fd272f7630dd").then((_items: string) => {
+      console.log(_items);
+      
+      setItems(JSON.parse(_items) as Item[]);
     });
   }, []); // Leere Abhängigkeitsliste sorgt dafür, dass der Effekt nur einmal ausgeführt wird
 

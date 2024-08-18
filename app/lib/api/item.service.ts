@@ -48,7 +48,15 @@ function formDataToObject(formData: FormData) {
 
 export async function getItems(userId: string) {
   await connectToDatabase();
-  return await ItemModel.find({ user: userId }); //.populate('place category user');
+  return JSON.stringify(await ItemModel.find({ user: userId }).populate('place'));
+}
+
+export async function getItem(
+  userId: string,
+  itemId: string,
+): Promise<string | null> {
+  const item = await ItemModel.findOne({ user: userId, _id: itemId });
+  return JSON.stringify(item);
 }
 
 export async function deleteItem(itemId: string) {

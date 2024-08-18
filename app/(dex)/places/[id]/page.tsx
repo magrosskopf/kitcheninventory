@@ -78,21 +78,25 @@ export default function Page() {
       <Divider />
       <div className="mt-5">
         <ul>
-          {place?.slots?.map(slot => {
+          {place?.slots?.map((slot) => {
             return (
               <>
-                <p>
-
-                  </p>
+                <p></p>
               </>
-            )
+            );
           })}
           <li></li>
         </ul>
       </div>
       <Divider />
       <div className="mt-5">
-        {place && <SlotsComponent _slots={place.slots} _items={place.items} placeId={id} />}
+        {place && (
+          <SlotsComponent
+            _slots={place.slots}
+            _items={place.items}
+            placeId={id}
+          />
+        )}
       </div>
     </main>
   );

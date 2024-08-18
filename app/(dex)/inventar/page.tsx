@@ -2,6 +2,7 @@ import { getItems } from "@/app/lib/api/item.service";
 import { ListItem } from "@/app/lib/definitions/item.definitions";
 import AddItemBtn from "@/app/ui/dex/inventar/addItemBtn";
 import AddItemDialog from "@/app/ui/dex/inventar/addItemDialog";
+import EditItemDialog from "@/app/ui/dex/inventar/editItemDialog";
 import FilterBar from "@/app/ui/dex/inventar/filterbar";
 import ItemList from "@/app/ui/dex/inventar/itemList";
 import Search from "@/app/ui/dex/inventar/search";
@@ -20,6 +21,7 @@ export default function Page() {
       <ItemList />
       {/* </Suspense> */}
       <AddItemDialog />
+      <EditItemDialog />
       <AddItemBtn />
     </main>
   );

@@ -1,7 +1,12 @@
 "use client";
 
 import { getItems } from "@/app/lib/api/item.service";
-import { addSlotToPlace, createSlot, deleteSlot, updateSlot } from "@/app/lib/api/place.service";
+import {
+  addSlotToPlace,
+  createSlot,
+  deleteSlot,
+  updateSlot,
+} from "@/app/lib/api/place.service";
 import { Item } from "@/app/lib/definitions/item.definitions";
 import { Place } from "@/app/lib/definitions/place.definitions";
 import { Slot } from "@/app/lib/definitions/slot.definitions";
@@ -9,7 +14,15 @@ import { PlusIcon } from "@heroicons/react/24/solid";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import { useState, useEffect } from "react";
 
-export default function SlotsComponent({ _slots, _items, placeId }: { _slots: Slot[], _items:Item[], placeId: string }) {
+export default function SlotsComponent({
+  _slots,
+  _items,
+  placeId,
+}: {
+  _slots: Slot[];
+  _items: Item[];
+  placeId: string;
+}) {
   const [slots, setSlots] = useState<Slot[]>([]);
   const [items, setItems] = useState<Item[]>([]); // State to hold items for selection
 
@@ -21,10 +34,7 @@ export default function SlotsComponent({ _slots, _items, placeId }: { _slots: Sl
   }, [_slots]);
 
   const addSlot = () => {
-    setSlots([
-      ...slots,
-      { _id: "", name: "", capacity: 1, item: "" },
-    ]);
+    setSlots([...slots, { _id: "", name: "", capacity: 1, item: "" }]);
   };
 
   const removeSlot = (id: string) => {
@@ -41,22 +51,22 @@ export default function SlotsComponent({ _slots, _items, placeId }: { _slots: Sl
     );
     let updatedSlot = slots.find((slot) => slot._id == id);
     let newSlot = { ...updatedSlot, [field]: value };
-    if(newSlot._id == "") {
-      if (!newSlot.item) return
+    if (newSlot._id == "") {
+      if (!newSlot.item) return;
       createSlot({
         name: newSlot.name || "",
         capacity: newSlot.capacity || 0,
         item: newSlot.item || "",
-      }).then(slotId => {
-        addSlotToPlace(slotId || "", placeId)
-      })
+      }).then((slotId) => {
+        addSlotToPlace(slotId || "", placeId);
+      });
     } else {
       updateSlot(newSlot as Slot);
     }
   };
 
   function getItemAmount(itemId: string): number {
-    return (_items.find(item => item._id == itemId))?.amount || 0
+    return _items.find((item) => item._id == itemId)?.amount || 0;
   }
 
   return (
@@ -92,7 +102,7 @@ export default function SlotsComponent({ _slots, _items, placeId }: { _slots: Sl
                 handleSlotChange(slot._id, "capacity", Number(e.target.value))
               }
               placeholder="Capacity"
-              className={`input input-bordered w-full mr-2 ${getItemAmount(slot.item) >= slot.capacity ? 'bg-orange-600' : ''}`}
+              className={`input input-bordered w-full mr-2 ${getItemAmount(slot.item) >= slot.capacity ? "bg-orange-600" : ""}`}
               required
             />
 
@@ -102,8 +112,8 @@ export default function SlotsComponent({ _slots, _items, placeId }: { _slots: Sl
                 handleSlotChange(slot._id, "item", e.target.value)
               }
               className="select select-bordered w-full mr-2"
-              required disabled={slot._id !== ""}
-
+              required
+              disabled={slot._id !== ""}
             >
               <option value="" disabled>
                 Select Item
