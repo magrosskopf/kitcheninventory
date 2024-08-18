@@ -48,7 +48,9 @@ function formDataToObject(formData: FormData) {
 
 export async function getItems(userId: string) {
   await connectToDatabase();
-  return JSON.stringify(await ItemModel.find({ user: userId }).populate('place'));
+  return JSON.stringify(
+    await ItemModel.find({ user: userId }).populate("place"),
+  );
 }
 
 export async function getItem(

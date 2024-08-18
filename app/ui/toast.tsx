@@ -11,10 +11,10 @@ export default function Toast({
     <>
       <div className="toast toast-end">
         <div className={`alert alert-${type}`}>
-            <span>{message}</span>
-            <button className="ml-2" onClick={onClose}>
-                ✕
-            </button>
+          <span>{message}</span>
+          <button className="ml-2" onClick={onClose}>
+            ✕
+          </button>
         </div>
       </div>
     </>

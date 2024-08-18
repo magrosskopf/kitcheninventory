@@ -24,8 +24,8 @@ export default function AddPlaceDialog() {
 
   useEffect(() => {
     // Fetch items from the server to populate the item selection dropdown
-    getItems("667da0d067b0fd272f7630dd").then((_items: Item[]) => {
-      setItems(_items);
+    getItems("667da0d067b0fd272f7630dd").then((_items: string) => {
+      setItems(JSON.parse(_items) as Item[]);
       console.log("_items", _items);
     });
   }, []);

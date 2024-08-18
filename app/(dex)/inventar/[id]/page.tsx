@@ -39,13 +39,12 @@ export default function EditItemDialog() {
       let _places = JSON.parse(places) as Place[];
       setPlaces(_places);
     });
-    
   }, [id]);
 
   const handleItemChange = (field: string, value: any) => {
     if (!item) {
-        showToast("No Item selected", "error");
-        throw new Error("No Item selected");
+      showToast("No Item selected", "error");
+      throw new Error("No Item selected");
     }
 
     const updatedItem = { ...item, [field]: value }; // Neuen Zustand berechnen
