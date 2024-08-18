@@ -27,8 +27,8 @@ export default function SlotsComponent({
   const [items, setItems] = useState<Item[]>([]); // State to hold items for selection
 
   useEffect(() => {
-    getItems("667da0d067b0fd272f7630dd").then((_items: Item[]) => {
-      setItems(_items);
+    getItems("667da0d067b0fd272f7630dd").then((_items: string) => {
+      setItems(JSON.parse(_items) as Item[]);
     });
     setSlots(_slots);
   }, [_slots]);
