@@ -7,6 +7,7 @@ export default function PlaceElement({ place }: { place: Place }) {
   const image = place.image;
   // @ts-ignore
   const base64Image = place?.image
+  // @ts-ignore
     ? Buffer.from(image["data"]).toString("base64")
     : "";
   const url = dataUrl.create(place.image as any);
