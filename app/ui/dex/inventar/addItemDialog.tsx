@@ -17,31 +17,39 @@ import { getPlaces } from "@/app/lib/api/place.service";
 import { Item } from "@/app/lib/definitions/item.definitions";
 import { useState, useEffect } from "react";
 import { log } from "console";
+import { getCategories } from "@/app/lib/api/category.service";
 
-export default function AddItemDialog() {
+export default function AddItemDialog({addNewItemToList}:{addNewItemToList: Function}) {
   const [places, setPlaces] = useState<Place[]>();
+  const [categories, setCategories] = useState<Category[]>();
   useEffect(() => {
     getPlaces("667da0d067b0fd272f7630dd").then((places) => {
       let _places = JSON.parse(places) as Place[];
       setPlaces(_places);
     });
+    getCategories().then((categories) => {
+      const parsedCategories = JSON.parse(categories)
+      setCategories(parsedCategories)
+    })
   }, []);
+  
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
-    createItem(formData);
+    createItem(formData).then(createdItem => {
+      if (createdItem) {
+        const parsedCreatedItem =  JSON.parse(createdItem.toString())
+        let categorieOfItem = categories?.find(category => category._id === parsedCreatedItem.category[0])
+        parsedCreatedItem.category = []
+        parsedCreatedItem.category.push(categorieOfItem)
+        addNewItemToList(parsedCreatedItem)
+       
+      }
+    })
+
   };
 
-  const categories: Category[] = [
-    {
-      id: new mongoose.Types.ObjectId().toHexString(),
-      name: "Obst",
-    },
-    {
-      id: new mongoose.Types.ObjectId().toHexString(),
-      name: "Milch",
-    },
-  ];
+  
   return (
     <dialog id="addItemDialog" className="modal">
       <div className="modal-box">
@@ -106,9 +114,9 @@ export default function AddItemDialog() {
               defaultValue=""
             >
               <option disabled>Pick one</option>
-              {categories.map((category: Category) => {
+              {categories?.map((category: Category) => {
                 return (
-                  <option key={category.id} value={category.id}>
+                  <option key={category._id} value={category._id}>
                     {category.name}
                   </option>
                 );

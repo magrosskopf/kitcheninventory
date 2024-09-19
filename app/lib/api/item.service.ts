@@ -12,7 +12,7 @@ export type State = {
   message?: string | null;
 };
 
-export async function createItem(formData: FormData): Promise<Boolean> {
+export async function createItem(formData: FormData): Promise<string | boolean> {
   try {
     await connectToDatabase();
     const item = formDataToObject(formData);
@@ -24,11 +24,14 @@ export async function createItem(formData: FormData): Promise<Boolean> {
       user: "667da0d067b0fd272f7630dd",
     });
     const savedItem = await newItem.save();
+    console.log("savedItem",savedItem);
+    
     await PlaceModel.findByIdAndUpdate(
       item.place,
       { $push: { items: savedItem } }, // Angenommen, Place hat ein items-Feld, das eine Liste von Item-IDs ist
     );
-    return true;
+
+    return JSON.stringify(newItem.toObject() as Item);
   } catch (error) {
     console.log(error);
     return false;
@@ -49,7 +52,7 @@ function formDataToObject(formData: FormData) {
 export async function getItems(userId: string) {
   await connectToDatabase();
   return JSON.stringify(
-    await ItemModel.find({ user: userId }).populate("place"),
+    await ItemModel.find({ user: userId }).populate("place category"),
   );
 }
 

@@ -1,7 +1,7 @@
-import { Schema, Model } from "mongoose";
+import mongoose, { Schema, Model } from "mongoose";
 
 export type Category = {
-  id: string;
+  _id: string;
   name: string;
 };
 

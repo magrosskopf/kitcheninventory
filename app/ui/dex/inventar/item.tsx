@@ -96,10 +96,10 @@ export default function ItemComponent({
         onTouchMove={handleTouchMove}
       >
         <div className="label-container flex flex-col">
-          <h2 className="text-accent text-xl hyphens-auto">{itemData.name}</h2>
+          <h2 className="text-accent text-md hyphens-auto line-clamp-1">{itemData.name}</h2>
           <div className="text-sm flex flex-row text-content">
             <TagIcon className="w-4 mr-2" />
-            <span className="text-sm">Gemüse</span>
+            <span className="text-sm">{itemData.category?.map(c => c.name) }</span>
           </div>
           <div className="text-sm flex flex-row text-content">
             <MapPinIcon className="w-4 mr-2" />
