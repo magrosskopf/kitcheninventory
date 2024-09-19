@@ -16,6 +16,7 @@ export default function Page() {
   const [searchQuery, setSearchQuery] = useState("");
   const [newItem, setNewItem] = useState(null);
   const [filters, setFilters] = useState({
+    place: "",
     category: "",
     status: "",
   });

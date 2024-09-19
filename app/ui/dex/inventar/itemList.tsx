@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import ItemComponent from "./item";
 import { Item } from "@/app/lib/definitions/item.definitions";
 import { getItems } from "@/app/lib/api/item.service";
+import { Place } from "@/app/lib/definitions/place.definitions";
 
 export default function ItemList({ searchQuery, itemToAdd, filters }:{searchQuery: string, itemToAdd: Item | null, filters: any}) {
   const [shiftedItemId, setShiftedItemId] = useState(-1);
@@ -51,11 +52,19 @@ export default function ItemList({ searchQuery, itemToAdd, filters }:{searchQuer
   const filterAllProperties = (searchquery: string, filters: any) => {
     return items.filter((item) =>
       item.name.toLowerCase().includes(searchQuery.toLowerCase())
-    ).filter(item => 
-      item.category?.find(x=> x._id === filters.category._id)? true: false
-    )
+    ).filter(item =>  {
+      console.log(filters.place);
+      
+      if(!filters.place) return true
+      else return item.place?._id === filters.place? true: false
+    })
 
     /*
+
+.filter(item => 
+      item.category?.find(x=> x._id === filters.category._id) && filters.category._id? true: false
+    )
+
  &&
       item.category?.find(x=> x._id === filters.category._id) &&
       item.place?.find(x=> x._id === filters.place._id)

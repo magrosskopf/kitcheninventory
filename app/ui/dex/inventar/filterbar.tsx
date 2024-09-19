@@ -27,6 +27,7 @@ export default function FilterBar({onFilterChange, onSortChange}: {onFilterChang
     <div className="flex flex-row">
       <select className="select select-bordered w-1/3 mr-2" onChange={handlePlaceChange} defaultValue="">
         <option disabled>Lagerort</option>
+        <option value=""></option>
         {places?.map(place => {
           return(
             <option value={place._id} key={place._id}>{place.name} </option>
@@ -35,6 +36,7 @@ export default function FilterBar({onFilterChange, onSortChange}: {onFilterChang
       </select>
       <select className="select select-bordered w-1/3 mr-2" onChange={handleCategoryChange} defaultValue="">
         <option disabled>Kategorie</option>
+        <option>-</option>
         <option>Obst</option>
         <option>Gemüse</option>
         <option>Beilagen</option>
