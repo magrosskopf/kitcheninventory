@@ -33,11 +33,11 @@ export default function EditItemDialog() {
 
   const categories: Category[] = [
     {
-      id: new mongoose.Types.ObjectId().toHexString(),
+      _id: new mongoose.Types.ObjectId().toHexString(),
       name: "Obst",
     },
     {
-      id: new mongoose.Types.ObjectId().toHexString(),
+      _id: new mongoose.Types.ObjectId().toHexString(),
       name: "Milch",
     },
   ];
@@ -107,7 +107,7 @@ export default function EditItemDialog() {
               <option disabled>Pick one</option>
               {categories.map((category: Category) => {
                 return (
-                  <option key={category.id} value={category.id}>
+                  <option key={category._id} value={category._id}>
                     {category.name}
                   </option>
                 );
