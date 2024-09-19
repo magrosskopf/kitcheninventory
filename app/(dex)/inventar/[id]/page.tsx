@@ -56,11 +56,11 @@ export default function EditItemDialog() {
 
   const categories: Category[] = [
     {
-      id: new mongoose.Types.ObjectId().toHexString(),
+      _id: new mongoose.Types.ObjectId().toHexString(),
       name: "Obst",
     },
     {
-      id: new mongoose.Types.ObjectId().toHexString(),
+      _id: new mongoose.Types.ObjectId().toHexString(),
       name: "Milch",
     },
   ];
