@@ -135,7 +135,7 @@ export default function EditItemDialog() {
           <option disabled>Pick one</option>
           {categories.map((category: Category) => {
             return (
-              <option key={category.id} value={category.id}>
+              <option key={category._id} value={category._id}>
                 {category.name}
               </option>
             );
