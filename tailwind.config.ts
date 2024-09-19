@@ -22,7 +22,7 @@ const config: Config = {
   },
   plugins: [require("daisyui")], //require("@tailwindcss/typography"),
   daisyui: {
-    themes: ["cupcake", "light", "dark"],
+    themes: ["dark"],
   },
 };
 export default config;
