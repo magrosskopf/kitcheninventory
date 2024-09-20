@@ -5,7 +5,7 @@ import { useCategories } from "@/app/lib/definitions/category/category.store";
 import { Place } from "@/app/lib/definitions/place.definitions";
 import { useEffect, useState } from "react";
 
-export default function FilterBar({onFilterChange}: {onFilterChange: Function, onSortChange: Function}) {
+export default function FilterBar({onFilterChange}: {onFilterChange: Function}) {
   const [places, setPlaces] = useState<Place[]>([])
   // const [categories, setCategories] = useState<Category[]>([])
   const categories: Category[] = useCategories((state: any) => state.categories)
