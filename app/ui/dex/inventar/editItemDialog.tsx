@@ -9,16 +9,15 @@ import {
 } from "@heroicons/react/24/outline";
 import Divider from "../../divider";
 import { createItem } from "@/app/lib/api/item.service";
-import { useFormState, useFormStatus } from "react-dom";
 import { Place } from "@/app/lib/definitions/place.definitions";
-import { Category } from "@/app/lib/definitions/category.definitions";
-import mongoose from "mongoose";
+import { Category } from "@/app/lib/definitions/category/category.definitions";
 import { getPlaces } from "@/app/lib/api/place.service";
-import { Item } from "@/app/lib/definitions/item.definitions";
 import { useState, useEffect } from "react";
+import { useCategories } from "@/app/lib/definitions/category/category.store";
 
 export default function EditItemDialog() {
   const [places, setPlaces] = useState<Place[]>();
+  const categories: Category[] = useCategories((state:any) => state.categories)
   useEffect(() => {
     getPlaces("667da0d067b0fd272f7630dd").then((places) => {
       let _places = JSON.parse(places) as Place[];
@@ -31,16 +30,7 @@ export default function EditItemDialog() {
     createItem(formData);
   };
 
-  const categories: Category[] = [
-    {
-      _id: new mongoose.Types.ObjectId().toHexString(),
-      name: "Obst",
-    },
-    {
-      _id: new mongoose.Types.ObjectId().toHexString(),
-      name: "Milch",
-    },
-  ];
+  
   return (
     <dialog id="editItemDialog" className="modal">
       <div className="modal-box">

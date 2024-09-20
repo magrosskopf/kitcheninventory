@@ -76,6 +76,7 @@ export default function ItemComponent({
     yDown = null;
   };
   const decreaseItemAmount = (): void => {
+    if (isItemEmpty(itemData)) return
     setItemData({ ...itemData, amount: itemData.amount - 1 });
     itemData.amount -= 1;
     updateItem(itemData);
@@ -86,6 +87,10 @@ export default function ItemComponent({
     itemData.amount += 1;
     updateItem(itemData);
   };
+
+  const isItemEmpty = (item: Item): boolean => {
+    return item.amount === 0
+  } 
 
   return (
     <li className="relative mb-3">

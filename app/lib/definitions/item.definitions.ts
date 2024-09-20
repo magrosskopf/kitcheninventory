@@ -1,5 +1,5 @@
 import mongoose, { Schema, Model } from "mongoose";
-import { Category } from "./category.definitions";
+import { Category } from "./category/category.definitions";
 import { Place } from "./place.definitions";
 import { User } from "./user.definitioins";
 

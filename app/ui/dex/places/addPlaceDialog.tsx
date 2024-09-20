@@ -35,6 +35,7 @@ export default function AddPlaceDialog() {
       ...slots,
       { id: slots.length + 1, name: "", capacity: 1, item: "" },
     ]);
+    
   };
 
   const removeSlot = (id: number) => {
@@ -77,6 +78,11 @@ export default function AddPlaceDialog() {
       image: imageBuffer,
       userId: new mongoose.Types.ObjectId("667da0d067b0fd272f7630dd"),
     });
+
+    const dialog = document.getElementById(
+      "addPlaceDialog",
+    ) as HTMLDialogElement;
+    dialog?.close();
   };
 
   return (

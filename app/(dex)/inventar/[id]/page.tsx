@@ -3,18 +3,20 @@ import { PlusIcon, QrCodeIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import Divider from "@/app/ui/divider";
 import { createItem, getItem, updateItem } from "@/app/lib/api/item.service";
 import { Place } from "@/app/lib/definitions/place.definitions";
-import { Category } from "@/app/lib/definitions/category.definitions";
+import { Category } from "@/app/lib/definitions/category/category.definitions";
 import { getPlaces } from "@/app/lib/api/place.service";
 import { useState, useEffect } from "react";
 import { Item } from "@/app/lib/definitions/item.definitions";
 import mongoose from "mongoose";
 import { useParams, useRouter } from "next/navigation";
 import Toast from "@/app/ui/toast";
+import { useCategories } from "@/app/lib/definitions/category/category.store";
 
 export default function EditItemDialog() {
   const { id } = useParams<{ id: string }>();
   const [places, setPlaces] = useState<Place[]>();
   const [item, setItem] = useState<Item>();
+  const categories: Category[] =  useCategories((state:any) => state.categories)
   const [toast, setToast] = useState({
     show: false,
     message: "",
@@ -54,16 +56,6 @@ export default function EditItemDialog() {
     showToast("Item updated", "success");
   };
 
-  const categories: Category[] = [
-    {
-      _id: new mongoose.Types.ObjectId().toHexString(),
-      name: "Obst",
-    },
-    {
-      _id: new mongoose.Types.ObjectId().toHexString(),
-      name: "Milch",
-    },
-  ];
 
   return (
     <>

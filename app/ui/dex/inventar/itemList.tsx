@@ -4,6 +4,9 @@ import ItemComponent from "./item";
 import { Item } from "@/app/lib/definitions/item.definitions";
 import { getItems } from "@/app/lib/api/item.service";
 import { Place } from "@/app/lib/definitions/place.definitions";
+import { useCategories } from "@/app/lib/definitions/category/category.store";
+import { getCategories } from "@/app/lib/api/category.service";
+import { Category } from "@/app/lib/definitions/category/category.definitions";
 
 export default function ItemList({ searchQuery, itemToAdd, filters }:{searchQuery: string, itemToAdd: Item | null, filters: any}) {
   const [shiftedItemId, setShiftedItemId] = useState(-1);
@@ -24,6 +27,8 @@ export default function ItemList({ searchQuery, itemToAdd, filters }:{searchQuer
     .finally(() => {
       setLoading(false);
     });
+
+    
   }, []); // Leere Abhängigkeitsliste sorgt dafür, dass der Effekt nur einmal ausgeführt wird
 
   useEffect(() => {
@@ -46,29 +51,31 @@ export default function ItemList({ searchQuery, itemToAdd, filters }:{searchQuer
   }, [itemToAdd])
 
   useEffect(() => {
-    setFilteredItems
+    setFilteredItems(
+      filterAllProperties(searchQuery, filters)
+    );
   }, [filters])
 
-  const filterAllProperties = (searchquery: string, filters: any) => {
-    return items.filter((item) =>
+  const filterAllProperties = (searchQuery: string, filters: any) => {
+    let searchedAndFilteredItems = items.filter((item) =>
       item.name.toLowerCase().includes(searchQuery.toLowerCase())
     ).filter(item =>  {
-      console.log(filters.place);
-      
       if(!filters.place) return true
       else return item.place?._id === filters.place? true: false
-    })
-
-    /*
-
-.filter(item => 
-      item.category?.find(x=> x._id === filters.category._id) && filters.category._id? true: false
+    }).filter(item => 
+      item.category?.find(x=> x._id === filters.category) || filters.category === ""? true: false
     )
 
- &&
-      item.category?.find(x=> x._id === filters.category._id) &&
-      item.place?.find(x=> x._id === filters.place._id)
-    */
+    if (isSortingEnabled()) searchedAndFilteredItems.sort((a, b) => {
+      if( a.amount < b.amount) return -1
+      else if (a.amount > b.amount) return 1
+      return 0
+    })
+    if (isDescending()) searchedAndFilteredItems.reverse()
+    return searchedAndFilteredItems
+
+    function isSortingEnabled() { return filters.amount !== "" }
+    function isDescending() { return filters.amount === "desc" }
   }
 
   const handleDeleteItem = (deletedItemId: string) => {

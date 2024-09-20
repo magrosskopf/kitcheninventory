@@ -11,26 +11,25 @@ import Divider from "../../divider";
 import { createItem } from "@/app/lib/api/item.service";
 import { useFormState, useFormStatus } from "react-dom";
 import { Place } from "@/app/lib/definitions/place.definitions";
-import { Category } from "@/app/lib/definitions/category.definitions";
+import { Category } from "@/app/lib/definitions/category/category.definitions";
 import mongoose from "mongoose";
 import { getPlaces } from "@/app/lib/api/place.service";
 import { Item } from "@/app/lib/definitions/item.definitions";
 import { useState, useEffect } from "react";
 import { log } from "console";
 import { getCategories } from "@/app/lib/api/category.service";
+import { useCategories } from "@/app/lib/definitions/category/category.store";
 
 export default function AddItemDialog({addNewItemToList}:{addNewItemToList: Function}) {
   const [places, setPlaces] = useState<Place[]>();
-  const [categories, setCategories] = useState<Category[]>();
+  // const [categories, setCategories] = useState<Category[]>();
+  const categories: Category[] = useCategories((state: any) => state.categories)
   useEffect(() => {
     getPlaces("667da0d067b0fd272f7630dd").then((places) => {
       let _places = JSON.parse(places) as Place[];
       setPlaces(_places);
     });
-    getCategories().then((categories) => {
-      const parsedCategories = JSON.parse(categories)
-      setCategories(parsedCategories)
-    })
+    
   }, []);
   
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {

@@ -1,6 +1,7 @@
 "use client";
 
 import { getItems } from "@/app/lib/api/item.service";
+import { useCategories } from "@/app/lib/definitions/category/category.store";
 import { Item, ListItem } from "@/app/lib/definitions/item.definitions";
 import AddItemBtn from "@/app/ui/dex/inventar/addItemBtn";
 import AddItemDialog from "@/app/ui/dex/inventar/addItemDialog";
@@ -19,6 +20,7 @@ export default function Page() {
     place: "",
     category: "",
     status: "",
+    amount: ""
   });
   const [sorts, setSorts] = useState({
     amount: "",
@@ -31,12 +33,7 @@ export default function Page() {
     }));
   };
 
-  const handleSortChange = (sortName: string, value: string) => {
-    setSorts((prevSorts) => ({
-      ...prevSorts,
-      [sortName]: value,
-    }));
-  };
+  
 
   const handleNewItem = (item: Item) => {
     console.log("createdItem item");
@@ -47,7 +44,7 @@ export default function Page() {
     <main className="relative h-auto">
       <h1 className={` mb-4 text-xl md:text-2xl`}>Inventar</h1>
       <Search onSearch={(query: string) => setSearchQuery(query)} />
-      <FilterBar onFilterChange={handleFilterChange} onSortChange={handleSortChange} />
+      <FilterBar onFilterChange={handleFilterChange}  />
       <Divider />
       {/* <Suspense fallback={<ItemComponentSkeleton />} > */}
       <ItemList searchQuery={searchQuery} itemToAdd={newItem} filters={filters} />
