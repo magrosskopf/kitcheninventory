@@ -11,12 +11,14 @@ import mongoose from "mongoose";
 import { useParams, useRouter } from "next/navigation";
 import Toast from "@/app/ui/toast";
 import { useCategories } from "@/app/lib/definitions/category/category.store";
+import { getCategories } from "@/app/lib/api/category.service";
 
 export default function EditItemDialog() {
   const { id } = useParams<{ id: string }>();
   const [places, setPlaces] = useState<Place[]>();
   const [item, setItem] = useState<Item>();
   const categories: Category[] =  useCategories((state:any) => state.categories)
+  const setCategories =  useCategories((state:any) => state.setCategories)
   const [toast, setToast] = useState({
     show: false,
     message: "",
@@ -41,6 +43,12 @@ export default function EditItemDialog() {
       let _places = JSON.parse(places) as Place[];
       setPlaces(_places);
     });
+    if(categories.length === 0) {
+      getCategories().then((_categories: string) => {
+        console.log("casts", _categories);
+        setCategories(JSON.parse(_categories))
+      })
+    }
   }, [id]);
 
   const handleItemChange = (field: string, value: any) => {

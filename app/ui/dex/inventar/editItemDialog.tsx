@@ -14,15 +14,19 @@ import { Category } from "@/app/lib/definitions/category/category.definitions";
 import { getPlaces } from "@/app/lib/api/place.service";
 import { useState, useEffect } from "react";
 import { useCategories } from "@/app/lib/definitions/category/category.store";
+import { getCategories } from "@/app/lib/api/category.service";
 
 export default function EditItemDialog() {
   const [places, setPlaces] = useState<Place[]>();
   const categories: Category[] = useCategories((state:any) => state.categories)
+  const setCategories = useCategories((state:any) => state.setCategories)
   useEffect(() => {
     getPlaces("667da0d067b0fd272f7630dd").then((places) => {
       let _places = JSON.parse(places) as Place[];
       setPlaces(_places);
     });
+    
+    
   }, []);
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();

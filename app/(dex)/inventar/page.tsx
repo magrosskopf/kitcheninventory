@@ -1,8 +1,9 @@
 "use client";
 
-import { getItems } from "@/app/lib/api/item.service";
+import { getCategories } from "@/app/lib/api/category.service";
 import { useCategories } from "@/app/lib/definitions/category/category.store";
-import { Item, ListItem } from "@/app/lib/definitions/item.definitions";
+import { Item } from "@/app/lib/definitions/item.definitions";
+import DataWrapper from "@/app/ui/datawrapper";
 import AddItemBtn from "@/app/ui/dex/inventar/addItemBtn";
 import AddItemDialog from "@/app/ui/dex/inventar/addItemDialog";
 import EditItemDialog from "@/app/ui/dex/inventar/editItemDialog";
@@ -25,6 +26,7 @@ export default function Page() {
   const [sorts, setSorts] = useState({
     amount: "",
   });
+  
 
   const handleFilterChange = (filterName: string, value: string) => {
     setFilters((prevFilters) => ({
@@ -50,7 +52,6 @@ export default function Page() {
       <ItemList searchQuery={searchQuery} itemToAdd={newItem} filters={filters} />
       {/* </Suspense> */}
       <AddItemDialog addNewItemToList={setNewItem} />
-      <EditItemDialog />
       <AddItemBtn />
     </main>
   );

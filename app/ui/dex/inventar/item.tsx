@@ -9,6 +9,7 @@ import {
   PencilIcon,
   TrashIcon,
 } from "@heroicons/react/24/outline";
+import Link from "next/link";
 import { useRef, useState } from "react";
 
 export default function ItemComponent({
@@ -130,12 +131,12 @@ export default function ItemComponent({
         className={`absolute right-2 bottom-2 flex flex-col transition-opacity duration-300 ease-in-out ${isShifted ? "opacity-100 z-10" : "opacity-0 z-0"}`}
         style={{ pointerEvents: isShifted ? "auto" : "none" }}
       >
-        <a
+        <Link
           href={`/inventar/${itemData._id}`}
           className="btn btn-edit btn-circle mb-1"
         >
           <PencilIcon className="w-4" />
-        </a>
+        </Link>
         <button
           className={`btn btn-delete btn-circle mt-1 ${loading ? "loading loading-bars loading-lg  text-secondary" : ""}`}
           onClick={handleDelete}

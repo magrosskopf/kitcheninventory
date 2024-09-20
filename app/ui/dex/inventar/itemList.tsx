@@ -14,7 +14,7 @@ export default function ItemList({ searchQuery, itemToAdd, filters }:{searchQuer
   const [filteredItems, setFilteredItems] = useState<Item[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-
+  const setCategories = useCategories((state:any) => state.setCategories)
   useEffect(() => {
     getItems("667da0d067b0fd272f7630dd").then((_items: string) => {
       const parsedItems = JSON.parse(_items) as Item[];
@@ -27,7 +27,10 @@ export default function ItemList({ searchQuery, itemToAdd, filters }:{searchQuer
     .finally(() => {
       setLoading(false);
     });
-
+    
+    getCategories().then((_categories: string) => {
+        setCategories(JSON.parse(_categories))
+    })
     
   }, []); // Leere Abhängigkeitsliste sorgt dafür, dass der Effekt nur einmal ausgeführt wird
 
