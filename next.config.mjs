@@ -5,6 +5,9 @@ const nextConfig = {
       bodySizeLimit: "20mb",
     },
   },
+  images: {
+    domains: ['picsum.photos'],
+},
 };
 
 export default nextConfig;

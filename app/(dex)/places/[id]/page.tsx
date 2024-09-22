@@ -41,14 +41,12 @@ export default function Page() {
       <div className="columns-2">
         <div className="avatar w-full">
           <div className="ring-primary ring-offset-base-100 w-24 rounded-full ring ring-offset-2">
-            {image != "" && (
               <Image
-                src={image || ""}
+                src={image || "https://picsum.photos/200"}
                 width={500}
                 height={500}
                 alt="Picture of the author"
               />
-            )}
           </div>
         </div>
         <div className="w-full">

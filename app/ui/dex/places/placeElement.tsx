@@ -14,10 +14,8 @@ export default function PlaceElement({ place }: { place: Place }) {
   return (
     <a href={`/places/${place._id}`} className="block">
       <div className="card glass h-32  text-center">
-        <figure>
-          {url != "" && (
-            <Image src={url} alt="Landscape picture" width={800} height={500} />
-          )}
+        <figure>            
+          <Image src={url !== ""? url : "https://picsum.photos/200"} alt="Landscape picture" width={800} height={500} />
         </figure>
         <div className="card-body p-1">
           <p className="">{place.name}</p>
