@@ -3,7 +3,8 @@ import ItemModel, { Item } from "../definitions/item.definitions";
 import connectToDatabase from "../database/mongoose";
 import PlaceModel from "../definitions/place.definitions";
 import { getServerSession, Session } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "../auth/authOptions";
+
 
 export type State = {
   errors?: {

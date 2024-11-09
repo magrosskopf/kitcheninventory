@@ -4,8 +4,9 @@ import PlaceModel, {
   PopulatedPlace,
 } from "@/app/lib/definitions/place.definitions";
 import SlotModel, { Slot } from "../definitions/slot.definitions";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+
 import { getServerSession } from "next-auth";
+import { authOptions } from "../auth/authOptions";
 
 export async function createPlace(place: any) {
   try {
@@ -14,7 +15,7 @@ export async function createPlace(place: any) {
     let result = await newPlace.save();
     return result? true : false;
   } catch (error) {
-    console.error(error);
+    console.log(error);
     return false;
   }
 }

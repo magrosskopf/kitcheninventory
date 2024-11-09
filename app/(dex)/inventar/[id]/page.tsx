@@ -11,7 +11,7 @@ import { useParams, useRouter } from "next/navigation";
 import Toast from "@/app/ui/toast";
 import { useCategories } from "@/app/lib/definitions/category/category.store";
 import { getCategories } from "@/app/lib/api/category.service";
-import { useSession } from "next-auth/react";
+
 
 export default function EditItemDialog() {
   const { id } = useParams<{ id: string }>();
@@ -43,7 +43,6 @@ export default function EditItemDialog() {
     });
     if(categories.length === 0) {
       getCategories().then((_categories: string) => {
-        console.log("casts", _categories);
         setCategories(JSON.parse(_categories))
       })
     }

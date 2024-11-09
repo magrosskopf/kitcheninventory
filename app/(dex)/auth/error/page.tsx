@@ -1,10 +1,10 @@
 'use client';
-
-import { useRouter } from 'next/navigation';
+import { error } from 'console';
+import { useParams, useRouter } from 'next/navigation';
 
 export default function ErrorPage() {
   const router = useRouter();
-  const error = router.query;
+  const {error} = useParams();
   console.log(error);
   
   let errorMessage = "An unknown error occurred";
