@@ -45,10 +45,7 @@ export default function ItemList({ searchQuery, itemToAdd, filters }:{searchQuer
   }, [searchQuery, items]);
 
   useEffect(() => {
-    console.log("itemToAdd", itemToAdd);
-    
     if (itemToAdd) {
-      
       setItems([...items, itemToAdd])
     }
   }, [itemToAdd])
@@ -91,15 +88,7 @@ export default function ItemList({ searchQuery, itemToAdd, filters }:{searchQuer
   const handleSwipe = (id: number) => {
     setShiftedItemId(id);
   };
-/*
-  if (loading) {
-    return <p>Loading items...</p>;
-  }
 
-  if (error) {
-    return <p>{error}</p>;
-  }
-*/
   return (
     <ul>
       {filteredItems.map((item, i) => {

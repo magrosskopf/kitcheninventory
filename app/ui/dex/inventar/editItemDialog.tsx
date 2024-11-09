@@ -21,7 +21,7 @@ export default function EditItemDialog() {
   const categories: Category[] = useCategories((state:any) => state.categories)
   const setCategories = useCategories((state:any) => state.setCategories)
   useEffect(() => {
-    getPlaces("667da0d067b0fd272f7630dd").then((places) => {
+    getPlaces().then((places) => {
       let _places = JSON.parse(places) as Place[];
       setPlaces(_places);
     });

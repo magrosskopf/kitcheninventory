@@ -25,7 +25,7 @@ export default function AddItemDialog({addNewItemToList}:{addNewItemToList: Func
   // const [categories, setCategories] = useState<Category[]>();
   const categories: Category[] = useCategories((state: any) => state.categories)
   useEffect(() => {
-    getPlaces("667da0d067b0fd272f7630dd").then((places) => {
+    getPlaces().then((places) => {
       let _places = JSON.parse(places) as Place[];
       setPlaces(_places);
     });

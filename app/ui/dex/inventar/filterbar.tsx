@@ -22,7 +22,7 @@ export default function FilterBar({onFilterChange}: {onFilterChange: Function}) 
   };
 
   useEffect(() => {
-    getPlaces("667da0d067b0fd272f7630dd").then(_places => setPlaces(JSON.parse(_places)))
+    getPlaces().then(_places => setPlaces(JSON.parse(_places)))
   }, [])
   return (
     <div className="flex flex-row">
