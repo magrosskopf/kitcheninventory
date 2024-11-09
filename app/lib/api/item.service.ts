@@ -2,6 +2,8 @@
 import ItemModel, { Item } from "../definitions/item.definitions";
 import connectToDatabase from "../database/mongoose";
 import PlaceModel from "../definitions/place.definitions";
+import { getServerSession, Session } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 export type State = {
   errors?: {
@@ -13,6 +15,8 @@ export type State = {
 };
 
 export async function createItem(formData: FormData): Promise<string | boolean> {
+  const session: Session | null = await getServerSession(authOptions)
+  if(!session || !session.user) return false
   try {
     await connectToDatabase();
     const item = formDataToObject(formData);
@@ -21,7 +25,7 @@ export async function createItem(formData: FormData): Promise<string | boolean> 
       amount: item.amount,
       category: item.category,
       place: item.place,
-      user: "667da0d067b0fd272f7630dd",
+      user: session.user.id,
     });
     const savedItem = await newItem.save();
     console.log("savedItem",savedItem);
@@ -39,8 +43,6 @@ export async function createItem(formData: FormData): Promise<string | boolean> 
 }
 
 export async function updateItem(item: Item) {
-  console.log(item);
-
   let result = await ItemModel.updateOne({ _id: item._id }, item);
   console.log(result);
 }
@@ -49,24 +51,23 @@ function formDataToObject(formData: FormData) {
   return Object.fromEntries(formData.entries());
 }
 
-export async function getItems(userId: string) {
+export async function getItems() {
+  const session = await getServerSession(authOptions);
   await connectToDatabase();
   return JSON.stringify(
-    await ItemModel.find({ user: userId }).populate("place category"),
+    await ItemModel.find({ user: session?.user.id }).populate("place category"),
   );
 }
 
 export async function getItem(
-  userId: string,
   itemId: string,
 ): Promise<string | null> {
-  const item = await ItemModel.findOne({ user: userId, _id: itemId });
+  const session = await getServerSession(authOptions);
+  const item = await ItemModel.findOne({ user: session?.user.id, _id: itemId });
   return JSON.stringify(item);
 }
 
 export async function deleteItem(itemId: string) {
   let res = await ItemModel.deleteOne({ _id: itemId });
-  console.log(res);
-
-  return true;
+  return res.acknowledged;
 }

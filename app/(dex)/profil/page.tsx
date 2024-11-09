@@ -1,8 +1,11 @@
-import { Suspense } from "react";
+import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import Wrapper from '@/app/ui/dex/profil/wrapper';
+import { getServerSession } from 'next-auth';
 export default async function Page() {
+  const session = await getServerSession(authOptions);
   return (
     <main>
-      <h1 className={` mb-4 text-xl md:text-2xl`}>Profil</h1>
+        <Wrapper session={session} />
     </main>
   );
 }

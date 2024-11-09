@@ -16,7 +16,7 @@ export default function ItemList({ searchQuery, itemToAdd, filters }:{searchQuer
   const [error, setError] = useState<string | null>(null);
   const setCategories = useCategories((state:any) => state.setCategories)
   useEffect(() => {
-    getItems("667da0d067b0fd272f7630dd").then((_items: string) => {
+    getItems().then((_items: string) => {
       const parsedItems = JSON.parse(_items) as Item[];
       setItems(parsedItems);
       setFilteredItems(parsedItems);
@@ -91,7 +91,7 @@ export default function ItemList({ searchQuery, itemToAdd, filters }:{searchQuer
   const handleSwipe = (id: number) => {
     setShiftedItemId(id);
   };
-
+/*
   if (loading) {
     return <p>Loading items...</p>;
   }
@@ -99,7 +99,7 @@ export default function ItemList({ searchQuery, itemToAdd, filters }:{searchQuer
   if (error) {
     return <p>{error}</p>;
   }
-
+*/
   return (
     <ul>
       {filteredItems.map((item, i) => {

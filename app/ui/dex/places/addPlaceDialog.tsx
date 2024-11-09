@@ -1,8 +1,5 @@
 "use client";
 import {
-  ArrowRightIcon,
-  CursorArrowRaysIcon,
-  LockClosedIcon,
   PlusIcon,
   QrCodeIcon,
   XMarkIcon,
@@ -11,12 +8,11 @@ import Divider from "../../divider";
 import { useState, useEffect } from "react";
 import { Item } from "@/app/lib/definitions/item.definitions";
 import { getItems } from "@/app/lib/api/item.service";
-import { log } from "console";
 import { createPlace, createSlot } from "@/app/lib/api/place.service";
-import { Slot } from "@/app/lib/definitions/slot.definitions";
 import mongoose from "mongoose";
-
-export default function AddPlaceDialog() {
+import { useSession } from "next-auth/react"
+import { Session } from "next-auth";
+export default function AddPlaceDialog({session}: {session: Session}) {
   const [slots, setSlots] = useState([
     { id: 1, name: "", capacity: 1, item: "" },
   ]);
@@ -24,9 +20,8 @@ export default function AddPlaceDialog() {
 
   useEffect(() => {
     // Fetch items from the server to populate the item selection dropdown
-    getItems("667da0d067b0fd272f7630dd").then((_items: string) => {
+    getItems().then((_items: string) => {
       setItems(JSON.parse(_items) as Item[]);
-      console.log("_items", _items);
     });
   }, []);
 
@@ -49,7 +44,6 @@ export default function AddPlaceDialog() {
       ),
     );
   };
-
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     const formData = new FormData(event.target as HTMLFormElement);
@@ -71,12 +65,13 @@ export default function AddPlaceDialog() {
     );
 
     // Hier können Sie die API-Aufrufe zum Speichern des Ortes und der Slots hinzufügen
+   
     const result = await createPlace({
       name,
       slots: slotsData,
       items: [],
       image: imageBuffer,
-      userId: new mongoose.Types.ObjectId("667da0d067b0fd272f7630dd"),
+      userId: new mongoose.Types.ObjectId(session?.user.id),
     });
 
     const dialog = document.getElementById(

@@ -5,6 +5,9 @@ import PlaceModel, {
   PopulatedPlace,
 } from "@/app/lib/definitions/place.definitions";
 import SlotModel, { Slot } from "../definitions/slot.definitions";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { Session } from "inspector";
+import { getServerSession } from "next-auth";
 
 export async function createPlace(place: any) {
   try {
@@ -40,23 +43,21 @@ export async function createSlot(tempSlot: {
   }
 }
 
-export async function getPlaces(userId: string) {
-  console.log("#####");
+export async function getPlaces() {
+  const session = await getServerSession(authOptions);
   await connectToDatabase();
-  const places = await PlaceModel.find({ userId }).populate("items");
-  console.log("###", places);
-
+  const places = await PlaceModel.find({ userId: session?.user.id }).populate("items");
   return JSON.stringify(places);
 }
 
 export async function getPlace(
   id: string,
 ): Promise<PopulatedPlace<"slots" | "items">> {
+  const session = await getServerSession(authOptions);
   await connectToDatabase();
-  const place = await PlaceModel.findOne({ _id: id })
+  const place = await PlaceModel.findOne({ _id: id, userId: session?.user.id })
     .populate("slots")
     .populate("items");
-  console.log("-asdfa", place);
 
   const stringPlace = JSON.stringify(place);
   return JSON.parse(stringPlace);
@@ -72,8 +73,6 @@ export async function updateSlot(slot: Slot | undefined) {
 }
 
 export async function addSlotToPlace(slotId: string, placeId: string) {
-  console.log("---", placeId, slotId);
-
   return await PlaceModel.updateOne(
     { _id: placeId },
     { $push: { slots: slotId } },

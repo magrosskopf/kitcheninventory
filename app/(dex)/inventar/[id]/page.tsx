@@ -1,17 +1,17 @@
 "use client";
-import { PlusIcon, QrCodeIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { QrCodeIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import Divider from "@/app/ui/divider";
-import { createItem, getItem, updateItem } from "@/app/lib/api/item.service";
+import { getItem, updateItem } from "@/app/lib/api/item.service";
 import { Place } from "@/app/lib/definitions/place.definitions";
 import { Category } from "@/app/lib/definitions/category/category.definitions";
 import { getPlaces } from "@/app/lib/api/place.service";
 import { useState, useEffect } from "react";
 import { Item } from "@/app/lib/definitions/item.definitions";
-import mongoose from "mongoose";
 import { useParams, useRouter } from "next/navigation";
 import Toast from "@/app/ui/toast";
 import { useCategories } from "@/app/lib/definitions/category/category.store";
 import { getCategories } from "@/app/lib/api/category.service";
+import { useSession } from "next-auth/react";
 
 export default function EditItemDialog() {
   const { id } = useParams<{ id: string }>();
@@ -34,12 +34,10 @@ export default function EditItemDialog() {
 
   useEffect(() => {
     if (!id) return;
-    getItem("667da0d067b0fd272f7630dd", id).then((item) => {
-      console.log(item);
-
+    getItem(id).then((item) => {
       if (item) setItem(JSON.parse(item));
     });
-    getPlaces("667da0d067b0fd272f7630dd").then((places) => {
+    getPlaces().then((places) => {
       let _places = JSON.parse(places) as Place[];
       setPlaces(_places);
     });
