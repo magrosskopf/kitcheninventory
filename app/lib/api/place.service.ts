@@ -1,25 +1,20 @@
 "use server";
 import connectToDatabase from "@/app/lib/database/mongoose";
 import PlaceModel, {
-  Place,
   PopulatedPlace,
 } from "@/app/lib/definitions/place.definitions";
 import SlotModel, { Slot } from "../definitions/slot.definitions";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { Session } from "inspector";
 import { getServerSession } from "next-auth";
 
 export async function createPlace(place: any) {
   try {
     await connectToDatabase();
-
     const newPlace = new PlaceModel(place);
     let result = await newPlace.save();
-    console.log(result);
-
-    return true;
+    return result? true : false;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return false;
   }
 }
