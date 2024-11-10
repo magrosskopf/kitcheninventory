@@ -6,11 +6,7 @@ import { useEffect, useState } from "react";
 export default function SignIn() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  useEffect(() => {
-
-    setUsername("info@magrosskopf.de")
-    setPassword("$2b$10$D4G5f18o7aMMfwasBl3FvOvGexx2F9LP2on1B47ZZBiWNKjvCnF2a")
-  },[])
+  
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     const res = await signIn("credentials", {
