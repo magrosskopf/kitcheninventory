@@ -41,6 +41,8 @@ export async function createSlot(tempSlot: {
 
 export async function getPlaces() {
   const session = await getServerSession(authOptions);
+  console.log("session", session);
+  
   if (!session?.user) {
     throw new Error("No User")
   }
