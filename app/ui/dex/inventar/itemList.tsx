@@ -32,7 +32,7 @@ export default function ItemList({ searchQuery, itemToAdd, filters }:{searchQuer
         setCategories(JSON.parse(_categories))
     })
     
-  }, []); // Leere Abhängigkeitsliste sorgt dafür, dass der Effekt nur einmal ausgeführt wird
+  }, []);
 
   useEffect(() => {
     if (searchQuery.trim() === "") {
