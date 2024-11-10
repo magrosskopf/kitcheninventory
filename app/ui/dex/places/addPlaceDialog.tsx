@@ -10,7 +10,6 @@ import { Item } from "@/app/lib/definitions/item.definitions";
 import { getItems } from "@/app/lib/api/item.service";
 import { createPlace, createSlot } from "@/app/lib/api/place.service";
 import mongoose from "mongoose";
-import { useSession } from "next-auth/react"
 import { Session } from "next-auth";
 export default function AddPlaceDialog({session}: {session: Session}) {
   const [slots, setSlots] = useState([

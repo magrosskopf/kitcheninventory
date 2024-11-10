@@ -1,7 +1,6 @@
 "use client";
 import { Place } from "@/app/lib/definitions/place.definitions";
 import PlaceElement from "./placeElement";
-import mongoose from "mongoose";
 import { getPlaces } from "@/app/lib/api/place.service";
 import { useState, useEffect } from "react";
 export default function PlacesGrid() {
