@@ -41,6 +41,9 @@ export async function createSlot(tempSlot: {
 
 export async function getPlaces() {
   const session = await getServerSession(authOptions);
+  if (!session?.user) {
+    throw new Error("No User")
+  }
   await connectToDatabase();
   const places = await PlaceModel.find({ userId: session?.user.id }).populate("items");
   return JSON.stringify(places);
