@@ -40,6 +40,7 @@ export async function createSlot(tempSlot: {
 }
 
 export async function getPlaces() {
+  console.log("test")
   const session = await getServerSession(authOptions);
   console.log("session", session);
   
