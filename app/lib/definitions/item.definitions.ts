@@ -23,7 +23,7 @@ const ItemSchema: Schema = new Schema({
 });
 
 const ItemModel: Model<ItemDocument> =
-  mongoose.models.Item || mongoose.model<ItemDocument>("Item", ItemSchema);
+  mongoose.model<ItemDocument>("Item", ItemSchema);
 
 export default ItemModel;
 // ListItem is the data type for displaying them in the ItemList component
