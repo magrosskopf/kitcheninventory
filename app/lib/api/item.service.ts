@@ -45,7 +45,7 @@ export async function createItem(formData: FormData): Promise<string | boolean> 
 
 export async function updateItem(item: Item) {
   let result = await ItemModel.updateOne({ _id: item._id }, item);
-  console.log(result);
+  return result.acknowledged
 }
 
 function formDataToObject(formData: FormData) {
