@@ -9,6 +9,8 @@ export default function PlacesGrid() {
 
   useEffect(() => {
     getPlaces().then((_places: string) => {
+      console.log(_places);
+      
       setPlaces(JSON.parse(_places));
     });
   }, []); // Leere Abhängigkeitsliste sorgt dafür, dass der Effekt nur einmal ausgeführt wird
