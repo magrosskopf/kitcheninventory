@@ -29,8 +29,6 @@ export async function createItem(formData: FormData): Promise<string | boolean> 
       user: session.user.id,
     });
     const savedItem = await newItem.save();
-    console.log("savedItem",savedItem);
-    
     await PlaceModel.findByIdAndUpdate(
       item.place,
       { $push: { items: savedItem } }, // Angenommen, Place hat ein items-Feld, das eine Liste von Item-IDs ist

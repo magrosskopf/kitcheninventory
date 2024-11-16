@@ -12,6 +12,6 @@ const CategorySchema: Schema = new Schema({
 });
 
 const CategoryModel: Model<CategoryDocument> =
-  mongoose.models.Category || mongoose.model<CategoryDocument>("Category", CategorySchema);
+  mongoose.models?.Category || mongoose.model<CategoryDocument>("Category", CategorySchema);
 
 export default CategoryModel;

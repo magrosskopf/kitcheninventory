@@ -52,9 +52,8 @@ export default function AddPlaceDialog({session}: {session: Session}) {
 
     const slotsData: any[] = await Promise.all(
       slots.map(
-        async (slot: { name: string; capacity: number; item: string }) => {
+        async (slot: { capacity: number; item: string }) => {
           const tempSlot = {
-            name: slot.name,
             capacity: slot.capacity,
             item: items.find((x) => x._id == slot.item)?._id || "",
           };

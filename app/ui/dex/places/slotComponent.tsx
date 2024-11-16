@@ -8,7 +8,6 @@ import {
   updateSlot,
 } from "@/app/lib/api/place.service";
 import { Item } from "@/app/lib/definitions/item.definitions";
-import { Place } from "@/app/lib/definitions/place.definitions";
 import { Slot } from "@/app/lib/definitions/slot.definitions";
 import { PlusIcon } from "@heroicons/react/24/solid";
 import { XMarkIcon } from "@heroicons/react/24/solid";
@@ -24,7 +23,7 @@ export default function SlotsComponent({
   placeId: string;
 }) {
   const [slots, setSlots] = useState<Slot[]>([]);
-  const [items, setItems] = useState<Item[]>([]); // State to hold items for selection
+  const [items, setItems] = useState<Item[]>([]);
 
   useEffect(() => {
     getItems().then((_items: string) => {
@@ -34,7 +33,7 @@ export default function SlotsComponent({
   }, [_slots]);
 
   const addSlot = () => {
-    setSlots([...slots, { _id: "", name: "", capacity: 1, item: "" }]);
+    setSlots([...slots, { _id: "", capacity: 1, item: "" }]);
   };
 
   const removeSlot = (id: string) => {
@@ -54,11 +53,17 @@ export default function SlotsComponent({
     if (newSlot._id == "") {
       if (!newSlot.item) return;
       createSlot({
-        name: newSlot.name || "",
         capacity: newSlot.capacity || 0,
         item: newSlot.item || "",
       }).then((slotId) => {
         addSlotToPlace(slotId || "", placeId);
+        newSlot._id = slotId
+        setSlots(
+          slots.map((slot) => {
+            return slot._id === ""? newSlot as Slot : slot
+          })
+        );
+        console.log(slots)
       });
     } else {
       updateSlot(newSlot as Slot);
@@ -71,19 +76,38 @@ export default function SlotsComponent({
 
   return (
     <>
+    <div className={`flex flex-col mb-2`}>
+      <div className="flex flex-row items-center mb-2">
+        <span className="w-full">Item</span>
+        <span className="w-full">Kapazität</span>
+        <span className="w-full">Anzahl</span>
+      </div>
+    </div>
       {slots.map((slot, index) => (
         <div key={slot._id} className={`flex flex-col mb-2`}>
           <div className="flex flex-row items-center mb-2">
-            <input
-              type="text"
-              value={slot.name}
+          <select
+              value={slot.item}
               onChange={(e) =>
-                handleSlotChange(slot._id, "name", e.target.value)
+                handleSlotChange(slot._id, "item", e.target.value)
               }
-              placeholder={`Slot Name ${index + 1}`}
-              className="input input-bordered w-full mr-2"
+              className="select select-bordered w-full mr-2"
               required
-            />
+              disabled={slot._id !== ""}
+            >
+              <option value="" selected disabled>
+                Select Item
+              </option>
+              {items.map((item: any) => (
+                <option
+                  key={item._id}
+                  value={item._id}
+                  selected={item._id === slot.item}
+                >
+                  {item.name}
+                </option>
+              ))}
+            </select>
             <input
               type="number"
               value={slot.capacity}
@@ -106,28 +130,7 @@ export default function SlotsComponent({
               required
             />
 
-            <select
-              value={slot.item}
-              onChange={(e) =>
-                handleSlotChange(slot._id, "item", e.target.value)
-              }
-              className="select select-bordered w-full mr-2"
-              required
-              disabled={slot._id !== ""}
-            >
-              <option value="" disabled>
-                Select Item
-              </option>
-              {items.map((item: any) => (
-                <option
-                  key={item._id}
-                  value={item._id}
-                  selected={item._id === slot.item}
-                >
-                  {item.name}
-                </option>
-              ))}
-            </select>
+            
             <button
               type="button"
               className="btn btn-error"

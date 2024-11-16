@@ -3,7 +3,6 @@ import mongoose, { Schema, Model } from "mongoose";
 
 export type Slot = {
   _id: string;
-  name: string;
   item: string;
   capacity: number;
 };
@@ -11,7 +10,6 @@ export type Slot = {
 interface SlotDocument extends Slot, Document {}
 
 const SlotSchema: Schema = new Schema({
-  name: { type: String, required: true },
   capacity: { type: Number, required: true },
   item: { type: Schema.Types.ObjectId, ref: "Item", required: true },
 });

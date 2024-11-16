@@ -22,8 +22,7 @@ const ItemSchema: Schema = new Schema({
   user: { type: Schema.Types.ObjectId, ref: "User", required: true },
 });
 
-const ItemModel: Model<ItemDocument> =
-  mongoose.model<ItemDocument>("Item", ItemSchema);
+const ItemModel: Model<ItemDocument> = mongoose.models?.Item || mongoose.model<ItemDocument>("Item", ItemSchema);
 
 export default ItemModel;
 // ListItem is the data type for displaying them in the ItemList component

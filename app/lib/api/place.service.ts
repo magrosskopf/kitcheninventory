@@ -4,7 +4,7 @@ import PlaceModel, {
   PopulatedPlace,
 } from "@/app/lib/definitions/place.definitions";
 import SlotModel, { Slot } from "../definitions/slot.definitions";
-
+import ItemModel from "../definitions/item.definitions";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/authOptions";
 
@@ -21,7 +21,6 @@ export async function createPlace(place: any) {
 }
 
 export async function createSlot(tempSlot: {
-  name: string;
   capacity: number;
   item: string;
 }) {
@@ -40,10 +39,7 @@ export async function createSlot(tempSlot: {
 }
 
 export async function getPlaces() {
-  console.log("test")
   const session = await getServerSession(authOptions);
-  console.log("session", session);
-  
   if (!session?.user) {
     throw new Error("No User")
   }
