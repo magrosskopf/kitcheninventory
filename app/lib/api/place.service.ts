@@ -38,13 +38,18 @@ export async function createSlot(tempSlot: {
   }
 }
 
-export async function getPlaces() {
+export async function getPlaces(): Promise<string> {
   const session = await getServerSession(authOptions);
   if (!session?.user) {
     throw new Error("No User")
   }
   await connectToDatabase();
-  const places = await PlaceModel.find({ userId: session?.user.id }).populate("items");
+  const places = await PlaceModel.find({ userId: session?.user.id }).populate("items").populate({
+    path: 'slots', 
+    populate: {
+      path: 'item', 
+    },
+  });
   return JSON.stringify(places);
 }
 

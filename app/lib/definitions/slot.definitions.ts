@@ -1,10 +1,15 @@
 // models/SlotModel.ts
 import mongoose, { Schema, Model } from "mongoose";
+import { Item } from "./item.definitions";
 
 export type Slot = {
   _id: string;
   item: string;
   capacity: number;
+};
+
+export type PopulatedSlot<T extends keyof Slot> = Omit<Slot, T> & {
+  [K in T]: K extends "item" ? Item : Slot[K];
 };
 
 interface SlotDocument extends Slot, Document {}
