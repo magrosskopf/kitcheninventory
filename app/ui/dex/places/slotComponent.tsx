@@ -81,6 +81,7 @@ export default function SlotsComponent({
         <span className="w-full">Item</span>
         <span className="w-full">Kapazität</span>
         <span className="w-full">Anzahl</span>
+        <span></span>
       </div>
     </div>
       {slots.map((slot, index) => (
@@ -118,17 +119,13 @@ export default function SlotsComponent({
               className="input input-bordered w-full mr-2"
               required
             />
-
-            <input
-              type="number"
-              value={getItemAmount(slot.item)}
-              onChange={(e) =>
-                handleSlotChange(slot._id, "capacity", Number(e.target.value))
-              }
-              placeholder="Capacity"
-              className={`input input-bordered w-full mr-2 ${getItemAmount(slot.item) >= slot.capacity ? "bg-orange-600" : ""}`}
-              required
-            />
+            <div className="w-full">
+              <div className="stats shadow">
+                <div className="stat">
+                  <div className={`stat-value  ${getItemAmount(slot.item) >= slot.capacity ? "text-orange-600" : ""}`}>{getItemAmount(slot.item)}</div>
+                </div>
+              </div>
+            </div>
 
             
             <button
