@@ -53,6 +53,22 @@ export async function getPlaces(): Promise<string> {
   return JSON.stringify(places);
 }
 
+export async function getPlaces2(): Promise<PopulatedPlace<"items slots">[]> {
+  const session = await getServerSession(authOptions);
+  if (!session?.user) {
+    throw new Error("No User")
+  }
+  await connectToDatabase();
+  const places = await PlaceModel.find({ userId: session?.user.id }).populate("items").populate({
+    path: 'slots', 
+    populate: {
+      path: 'item', 
+    },
+  }) as unknown as PopulatedPlace<"items slots">[];
+  await delay(2000); 
+  return places;
+}
+
 export async function getPlace(
   id: string,
 ): Promise<PopulatedPlace<"slots" | "items">> {
@@ -80,4 +96,8 @@ export async function addSlotToPlace(slotId: string, placeId: string) {
     { _id: placeId },
     { $push: { slots: slotId } },
   );
+}
+
+function delay(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
