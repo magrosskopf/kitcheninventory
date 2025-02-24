@@ -13,6 +13,8 @@ import EditItemDialog from "@/app/ui/dex/inventar/editItemDialog";
 import { ItemComponentSkeleton } from "@/app/ui/skeletons";
 import { SessionProvider, useSession } from "next-auth/react";
 import { useState } from "react";
+import AddPDFBtn from "./dex/inventar/addPDFBtn";
+import AddPDFDialog from "./dex/inventar/addPDFDialog";
 
 export default function InventarWrapper() {
     const [searchQuery, setSearchQuery] = useState("");
@@ -44,8 +46,10 @@ export default function InventarWrapper() {
       <EditItemDialog />
       <SessionProvider>
       <AddItemDialog addNewItemToList={setNewItem} />
+      <AddPDFDialog />
       </SessionProvider>
       <AddItemBtn />
+      <AddPDFBtn />
     </main>
     )
 }

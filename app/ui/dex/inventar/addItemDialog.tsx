@@ -1,23 +1,15 @@
 "use client";
 import {
-  ArrowRightIcon,
-  CursorArrowRaysIcon,
-  LockClosedIcon,
   PlusIcon,
   QrCodeIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import Divider from "../../divider";
 import { createItem } from "@/app/lib/api/item.service";
-import { useFormState, useFormStatus } from "react-dom";
 import { Place } from "@/app/lib/definitions/place.definitions";
 import { Category } from "@/app/lib/definitions/category/category.definitions";
-import mongoose from "mongoose";
 import { getPlaces } from "@/app/lib/api/place.service";
-import { Item } from "@/app/lib/definitions/item.definitions";
 import { useState, useEffect } from "react";
-import { log } from "console";
-import { getCategories } from "@/app/lib/api/category.service";
 import { useCategories } from "@/app/lib/definitions/category/category.store";
 
 export default function AddItemDialog({addNewItemToList}:{addNewItemToList: Function}) {
